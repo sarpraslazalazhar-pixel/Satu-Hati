@@ -97,6 +97,10 @@ DB_CONNECTION=sqlite
 SESSION_DRIVER=database
 SESSION_PATH=/       # WAJIB "/" — jangan diubah
 
+# Route maintenance tanpa SSH (/mig321, /mig123, /mig000, /mig999).
+# Kosongkan setelah setup di produksi untuk mematikannya.
+MAINTENANCE_TOKEN=
+
 # Real-time (opsional; tanpa ini kiosk tetap jalan via polling 3 detik)
 BROADCAST_CONNECTION=reverb   # atau pusher
 PUSHER_APP_ID=
@@ -136,6 +140,19 @@ php artisan test --compact     # jalankan tes
 php artisan optimize           # cache config/route/view (produksi)
 php artisan optimize:clear     # bersihkan cache
 ```
+
+### Migrasi tanpa Terminal (shared hosting)
+
+Set `MAINTENANCE_TOKEN` di `.env`, lalu buka lewat browser:
+
+| URL | Fungsi |
+|---|---|
+| `/mig999?key=TOKEN` | Status migrasi + daftar tabel + akun amil |
+| `/mig321?key=TOKEN` | Jalankan migrasi |
+| `/mig000?key=TOKEN` | Buat akun amil (`db:seed`) |
+| `/mig123?key=TOKEN` | **Hapus semua tabel** lalu migrasi ulang |
+
+Kosongkan `MAINTENANCE_TOKEN` setelah selesai untuk mematikan route tersebut. Detail: [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ---
 

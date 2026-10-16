@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Maintenance Token
+    |--------------------------------------------------------------------------
+    |
+    | Token untuk route maintenance (/mig321, /mig123, /mig000, /mig999).
+    | Kosongkan di produksi setelah setup selesai untuk mematikan fitur ini.
+    |
+    */
+
+    'maintenance_token' => env('MAINTENANCE_TOKEN', ''),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

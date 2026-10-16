@@ -184,13 +184,64 @@ php artisan key:generate --force
 
 ## 7. Migrasi & Akun Amil
 
+### Cara A — Route maintenance (tanpa Terminal/SSH)
+
+Hosting yang tidak menyediakan SSH tetap bisa menjalankan migrasi lewat browser.
+
+**1. Set token di `.env`:**
+
+```dotenv
+MAINTENANCE_TOKEN=token-rahasia-anda
+```
+
+**2. Buka URL berikut (ganti `token-rahasia-anda`):**
+
+| URL | Fungsi | Kapan dipakai |
+|---|---|---|
+| `/mig999?key=TOKEN` | Status migrasi, daftar tabel, akun amil | Cek dulu sebelum apa-apa |
+| `/mig321?key=TOKEN` | Jalankan migrasi yang belum jalan | Deploy pertama / setelah update |
+| `/mig000?key=TOKEN` | Isi akun amil (`db:seed`) | Setelah migrasi |
+| `/mig123?key=TOKEN` | **HAPUS SEMUA TABEL** lalu migrasi ulang | Hanya saat setup awal / reset total |
+
+Urutan pertama kali: `/mig999` → `/mig321` → `/mig000` → `/mig999` (verifikasi).
+
+**3. Setelah selesai, matikan route-nya:**
+
+Kosongkan `MAINTENANCE_TOKEN` di `.env`, lalu:
+
+```dotenv
+MAINTENANCE_TOKEN=
+```
+
+Semua route `/mig*` otomatis jadi 404. Ini aman ditinggal di produksi.
+
+> Tanpa token yang benar, URL mengembalikan **403**. Kalau `MAINTENANCE_TOKEN` kosong, hasilnya **404** — fitur benar-benar mati.
+
+### Cara B — Terminal / SSH
+
 ```bash
 cd ~/satuhati
 php artisan migrate --force
 php artisan db:seed --force
 ```
 
-Akun default yang dibuat:
+`--force` wajib karena `APP_ENV=production` — tanpa itu Laravel minta konfirmasi dan gagal di non-interaktif.
+
+### Cara C — Cron Jobs (sekali pakai)
+
+Bila Terminal & SSH sama-sama tidak ada:
+
+**cPanel → Cron Jobs → Add New Cron Job**, isi command:
+
+```bash
+cd /home/USERNAME/satuhati && /usr/local/bin/php artisan migrate --force && /usr/local/bin/php artisan db:seed --force
+```
+
+Jalankan sekali (set menit `*`, jam `0`, tanggal `1`, bulan `1`), cek output di email, lalu hapus cron-nya.
+
+> **DB sudah ada isinya?** Jangan `/mig123` atau `migrate:fresh` — keduanya menghapus seluruh data. Cukup `/mig321` atau `migrate --force`.
+
+### Akun default
 
 | Email | Password |
 |---|---|
@@ -313,6 +364,10 @@ Lewat cPanel Git™ Version Control: **Manage → Pull or Deploy → Update from
 | Impor/ekspor Excel gagal | Cek `zip` aktif, dan `storage/app` bisa ditulis (`chmod -R 775 storage`). |
 | Upload slide gagal | `public/uploads/slides` harus writable (`chmod -R 775 public/uploads`). |
 | `Vite manifest not found` | `public/build/manifest.json` hilang. Jalankan `npm run build` lokal, upload `public/build/`. |
+| `/mig321` balas 403 | Token salah. Cek `MAINTENANCE_TOKEN` di `.env` dan tambahkan `?key=TOKEN` pada URL. |
+| `/mig321` balas 404 | `MAINTENANCE_TOKEN` kosong — fitur sengaja dimatikan. Isi token, lalu `php artisan config:clear`. |
+| `/mig999` bilang `Migration table not found` | Wajar di database baru. Jalankan `/mig321` dulu. |
+| Route `/mig*` hilang setelah update | `php artisan route:clear` (route di-cache). |
 | Total donasi tidak update di kiosk | Cek `/api/donations` bisa diakses. Tanpa WebSocket, tunggu maksimal 3 detik. |
 | CSS/JS basi setelah update | `php artisan optimize:clear`, lalu hard refresh browser (Ctrl+Shift+R). |
 
