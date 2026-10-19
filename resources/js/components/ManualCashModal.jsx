@@ -73,27 +73,27 @@ export default function ManualCashModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-brutal/70 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white border-[3px] border-brutal rounded-3xl p-4 sm:p-7 max-w-lg w-full shadow-brutal-lg animate-in zoom-in-95 my-6 sm:my-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-[#1C140E]/60 backdrop-blur-xs overflow-y-auto">
+      <div className="bg-[#FAF7F2] border-2 border-[#D88A3E]/40 rounded-3xl p-4 sm:p-7 max-w-lg w-full shadow-2xl animate-in zoom-in-95 my-6 sm:my-8 text-[#1C140E]">
         
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b-2 border-brutal mb-5">
+        <div className="flex items-center justify-between pb-4 border-b border-[#E8DDCD] mb-5">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-lime border-2 border-brutal flex items-center justify-center font-bold text-lg shadow-brutal-sm">
+            <div className="w-10 h-10 rounded-xl bg-[#C66723] text-white flex items-center justify-center font-bold text-lg shadow-2xs">
               💵
             </div>
             <div>
-              <h3 className="font-display text-xl sm:text-2xl text-forest leading-none">
+              <h3 className="font-poster font-black text-xl sm:text-2xl text-[#1C140E] leading-none">
                 INPUT DONASI CASH / MANUAL
               </h3>
-              <p className="text-xs text-gray-600 font-semibold mt-1">
+              <p className="text-xs text-[#7A6855] font-semibold mt-1">
                 Penerimaan tunai langsung atau komitmen donatur • Amil LAZ Al Azhar Peduli
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 sm:w-8 sm:h-8 shrink-0 rounded-full border-2 border-brutal flex items-center justify-center hover:bg-gray-100 cursor-pointer"
+            className="w-10 h-10 sm:w-8 sm:h-8 shrink-0 rounded-full border border-[#D5BEA1] flex items-center justify-center hover:bg-amber-50 cursor-pointer text-[#7A6855]"
           >
             <X className="w-5 h-5 sm:w-4 sm:h-4" />
           </button>
@@ -101,13 +101,13 @@ export default function ManualCashModal({ isOpen, onClose }) {
 
         {/* Feedback alerts */}
         {errorMsg && (
-          <div className="mb-4 bg-error/10 border-2 border-error text-error text-xs font-bold rounded-xl p-3 flex items-center gap-2">
+          <div className="mb-4 bg-red-50 border border-red-300 text-red-700 text-xs font-bold rounded-xl p-3 flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
         {successMsg && (
-          <div className="mb-4 bg-lime/20 border-2 border-forest text-forest text-xs font-bold rounded-xl p-3 flex items-center gap-2">
+          <div className="mb-4 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-xl p-3 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>{successMsg}</span>
           </div>
@@ -116,31 +116,30 @@ export default function ManualCashModal({ isOpen, onClose }) {
         <form onSubmit={handleSubmit} className="space-y-4">
           
           {/* Checkbox: Komitmen / Book */}
-          <div className="bg-comic-yellow/20 border-2 border-brutal rounded-2xl p-3.5 flex items-start gap-3">
+          <div className="bg-[#FAF6F0] border border-[#E8DDCD] rounded-2xl p-3.5 flex items-start gap-3">
             <input
               type="checkbox"
               id="isCommitment"
               checked={isCommitment}
               onChange={(e) => setIsCommitment(e.target.checked)}
-              className="w-5 h-5 mt-0.5 rounded border-2 border-brutal text-forest focus:ring-forest cursor-pointer accent-forest"
+              className="w-5 h-5 mt-0.5 rounded border border-[#D5BEA1] text-[#C66723] focus:ring-[#C66723] cursor-pointer accent-[#C66723]"
             />
-            <label htmlFor="isCommitment" className="text-sm sm:text-xs font-bold text-brutal cursor-pointer select-none">
-              <span className="block text-sm font-extrabold text-forest">
+            <label htmlFor="isCommitment" className="text-sm sm:text-xs font-bold text-[#1C140E] cursor-pointer select-none">
+              <span className="block text-sm font-poster font-bold text-[#C66723]">
                 Akan Berdonasi / Komitmen / Book
               </span>
-              <span className="text-gray-600 font-medium block mt-0.5">
+              <span className="text-[#7A6855] font-medium block mt-0.5">
                 Centang jika donatur baru berjanji/komitmen (belum bayar tunai sekarang). Nomor telepon wajib diisi untuk follow-up.
               </span>
             </label>
           </div>
-
           {/* Nama / Sumber */}
           <div>
-            <label className="block text-sm sm:text-xs font-bold text-brutal mb-1">
+            <label className="block text-sm sm:text-xs font-bold text-[#1C140E] mb-1">
               Nama / Sumber Donatur *
             </label>
             <div className="relative">
-              <User className="w-4 h-4 absolute left-3 top-3 text-gray-500" />
+              <User className="w-4 h-4 absolute left-3 top-3 text-[#7A6855]" />
               <input
                 type="text"
                 placeholder="cth: Bpk. H. Rahmat / Hamba Allah / Siswa Kelas 9A"
@@ -148,7 +147,7 @@ export default function ManualCashModal({ isOpen, onClose }) {
                 onChange={(e) => setDonorName(e.target.value)}
                 autoComplete="name"
                 enterkeyhint="next"
-                className="w-full pl-9 pr-3 py-3 sm:py-2.5 border-2 border-brutal rounded-xl text-base sm:text-sm font-semibold outline-none focus:ring-2 focus:ring-forest"
+                className="w-full pl-9 pr-3 py-3 sm:py-2.5 bg-white border border-[#D5BEA1] rounded-xl text-base sm:text-sm font-semibold outline-none focus:border-[#C66723] focus:ring-1 focus:ring-[#C66723]"
                 required
               />
             </div>
@@ -156,16 +155,16 @@ export default function ManualCashModal({ isOpen, onClose }) {
 
           {/* Tanggal & Waktu */}
           <div>
-            <label className="block text-sm sm:text-xs font-bold text-brutal mb-1">
+            <label className="block text-sm sm:text-xs font-bold text-[#1C140E] mb-1">
               Tanggal & Waktu Transaksi *
             </label>
             <div className="relative">
-              <Calendar className="w-4 h-4 absolute left-3 top-3 text-gray-500" />
+              <Calendar className="w-4 h-4 absolute left-3 top-3 text-[#7A6855]" />
               <input
                 type="datetime-local"
                 value={donatedAt}
                 onChange={(e) => setDonatedAt(e.target.value)}
-                className="w-full pl-9 pr-3 py-3 sm:py-2.5 border-2 border-brutal rounded-xl text-base sm:text-sm font-mono font-semibold outline-none focus:ring-2 focus:ring-forest"
+                className="w-full pl-9 pr-3 py-3 sm:py-2.5 bg-white border border-[#D5BEA1] rounded-xl text-base sm:text-sm font-mono font-semibold outline-none focus:border-[#C66723] focus:ring-1 focus:ring-[#C66723]"
                 required
               />
             </div>
@@ -173,11 +172,11 @@ export default function ManualCashModal({ isOpen, onClose }) {
 
           {/* Nominal */}
           <div>
-            <label className="block text-sm sm:text-xs font-bold text-brutal mb-1">
+            <label className="block text-sm sm:text-xs font-bold text-[#1C140E] mb-1">
               Nominal Donasi (Rp) *
             </label>
             <div className="relative mb-2">
-              <span className="absolute left-3.5 top-2.5 font-mono font-bold text-sm text-gray-500">Rp</span>
+              <span className="absolute left-3.5 top-2.5 font-mono font-bold text-sm text-[#7A6855]">Rp</span>
               <input
                 type="text"
                 inputMode="numeric"
@@ -185,7 +184,7 @@ export default function ManualCashModal({ isOpen, onClose }) {
                 value={amount ? Number(amount).toLocaleString('id-ID') : ''}
                 onChange={(e) => setAmount(e.target.value.replace(/\D/g, ''))}
                 enterkeyhint="next"
-                className="w-full pl-11 pr-3 py-3 sm:py-2.5 border-2 border-brutal rounded-xl text-base font-mono font-extrabold outline-none focus:ring-2 focus:ring-forest"
+                className="w-full pl-11 pr-3 py-3 sm:py-2.5 bg-white border border-[#D5BEA1] rounded-xl text-base font-mono font-extrabold outline-none focus:border-[#C66723] focus:ring-1 focus:ring-[#C66723]"
                 required
               />
             </div>
@@ -196,7 +195,7 @@ export default function ManualCashModal({ isOpen, onClose }) {
                   key={q}
                   type="button"
                   onClick={() => setAmount(String(q))}
-                  className="text-sm sm:text-[11px] font-mono font-bold px-3 py-2.5 sm:px-2 sm:py-1 min-h-[40px] sm:min-h-0 bg-mint/50 hover:bg-comic-yellow border border-brutal rounded-lg cursor-pointer transition-colors"
+                  className="text-sm sm:text-[11px] font-mono font-bold px-3 py-2.5 sm:px-2 sm:py-1 min-h-[40px] sm:min-h-0 bg-[#FAF6F0] hover:bg-[#F5EFE6] text-[#1C140E] border border-[#D5BEA1] rounded-lg cursor-pointer transition-colors"
                 >
                   {(q / 1000).toLocaleString('id-ID')}rb
                 </button>
@@ -206,11 +205,11 @@ export default function ManualCashModal({ isOpen, onClose }) {
 
           {/* Nomor HP */}
           <div>
-            <label className="block text-sm sm:text-xs font-bold text-brutal mb-1">
-              Nomor WhatsApp / HP {isCommitment ? <span className="text-error font-extrabold">(Wajib untuk Komitmen) *</span> : <span className="text-gray-500 font-normal">(Opsional)</span>}
+            <label className="block text-sm sm:text-xs font-bold text-[#1C140E] mb-1">
+              Nomor WhatsApp / HP {isCommitment ? <span className="text-red-600 font-extrabold">(Wajib untuk Komitmen) *</span> : <span className="text-[#7A6855] font-normal">(Opsional)</span>}
             </label>
             <div className="relative">
-              <Phone className="w-4 h-4 absolute left-3 top-3 text-gray-500" />
+              <Phone className="w-4 h-4 absolute left-3 top-3 text-[#7A6855]" />
               <input
                 type="tel"
                 placeholder="cth: 081234567890"
@@ -218,8 +217,8 @@ export default function ManualCashModal({ isOpen, onClose }) {
                 onChange={(e) => setDonorPhone(e.target.value)}
                 autoComplete="tel"
                 enterkeyhint="next"
-                className={`w-full pl-9 pr-3 py-3 sm:py-2.5 border-2 border-brutal rounded-xl text-base sm:text-sm font-mono font-semibold outline-none focus:ring-2 ${
-                  isCommitment ? 'border-comic-yellow focus:ring-comic-yellow bg-comic-yellow/5' : 'focus:ring-forest'
+                className={`w-full pl-9 pr-3 py-3 sm:py-2.5 bg-white border border-[#D5BEA1] rounded-xl text-base sm:text-sm font-mono font-semibold outline-none focus:border-[#C66723] focus:ring-1 focus:ring-[#C66723] ${
+                  isCommitment ? 'border-[#C66723] bg-[#C66723]/5' : ''
                 }`}
                 required={isCommitment}
               />
@@ -228,37 +227,35 @@ export default function ManualCashModal({ isOpen, onClose }) {
 
           {/* Doa / Pesan */}
           <div>
-            <label className="block text-sm sm:text-xs font-bold text-brutal mb-1">
-              Doa / Catatan <span className="text-gray-500 font-normal">(Opsional)</span>
+            <label className="block text-sm sm:text-xs font-bold text-[#1C140E] mb-1">
+              Doa / Catatan <span className="text-[#7A6855] font-normal">(Opsional)</span>
             </label>
             <div className="relative">
-              <MessageSquare className="w-4 h-4 absolute left-3 top-3 text-gray-500" />
+              <MessageSquare className="w-4 h-4 absolute left-3 top-3 text-[#7A6855]" />
               <textarea
                 rows="2"
                 placeholder="Semoga berkah dan menjadi amal jariyah terbaik..."
                 value={prayerMessage}
                 onChange={(e) => setPrayerMessage(e.target.value)}
-                className="w-full pl-9 pr-3 py-3 sm:py-2 border-2 border-brutal rounded-xl text-base sm:text-xs outline-none focus:ring-2 focus:ring-forest"
+                className="w-full pl-9 pr-3 py-3 sm:py-2 bg-white border border-[#D5BEA1] rounded-xl text-base sm:text-xs outline-none focus:border-[#C66723] focus:ring-1 focus:ring-[#C66723]"
               />
             </div>
           </div>
 
           {/* Action buttons */}
-          <div className="pt-3 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2.5 border-t-2 border-gray-100">
+          <div className="pt-3 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2.5 border-t border-[#E8DDCD]">
             <button
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="w-full sm:w-auto px-5 sm:px-4 py-3.5 sm:py-2.5 border-2 border-brutal rounded-xl text-sm sm:text-xs font-bold hover:bg-gray-100 cursor-pointer"
+              className="w-full sm:w-auto px-5 sm:px-4 py-3.5 sm:py-2.5 border border-[#D5BEA1] bg-white hover:bg-amber-50/50 rounded-xl text-sm sm:text-xs font-bold text-[#7A6855] cursor-pointer"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full sm:w-auto px-5 sm:px-5 py-3.5 sm:py-2.5 border-2 border-brutal rounded-xl text-sm sm:text-xs font-extrabold text-white shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                isCommitment ? 'bg-forest hover:bg-forest/90' : 'bg-forest hover:bg-forest/90'
-              }`}
+              className="w-full sm:w-auto px-5 sm:px-5 py-3.5 sm:py-2.5 bg-[#C66723] hover:bg-[#b0581a] text-white font-poster font-bold rounded-xl shadow-sm text-sm sm:text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5"
             >
               {isSubmitting ? 'Menyimpan...' : isCommitment ? 'Simpan Komitmen' : 'Simpan & Verifikasi'}
             </button>

@@ -152,29 +152,29 @@ export default function QrisImportModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/75 backdrop-blur-xs overflow-y-auto">
-      <div className={`bg-white border-[3px] border-slate-900 rounded-3xl p-5 sm:p-7 shadow-2xl my-6 w-full ${
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-[#1C140E]/60 backdrop-blur-xs overflow-y-auto">
+      <div className={`bg-[#FAF7F2] border-2 border-[#D88A3E]/40 rounded-3xl p-5 sm:p-7 shadow-2xl my-6 w-full text-[#1C140E] ${
         step === 'review' ? 'max-w-5xl' : 'max-w-xl'
       }`}>
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between pb-4 border-b-2 border-slate-900 mb-4">
+        <div className="flex items-center justify-between pb-4 border-b border-[#E8DDCD] mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-amber-100 border-2 border-slate-900 flex items-center justify-center shadow-xs">
-              <FileText className="w-5 h-5 text-amber-800" />
+            <div className="w-10 h-10 rounded-xl bg-[#C66723] text-white flex items-center justify-center shadow-2xs">
+              <FileText className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-extrabold text-base sm:text-lg text-slate-900 leading-tight">
+              <h3 className="font-poster font-black text-base sm:text-lg text-[#1C140E] leading-tight">
                 Impor &amp; Rekap PDF QRIS Danamon
               </h3>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-xs text-[#7A6855] font-medium">
                 Dukungan multi-file PDF sekaligus dengan rekapitulasi otomatis
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full border-2 border-slate-900 flex items-center justify-center hover:bg-slate-100 cursor-pointer text-slate-700"
+            className="w-8 h-8 rounded-full border border-[#D5BEA1] flex items-center justify-center hover:bg-amber-50 cursor-pointer text-[#7A6855]"
           >
             <X className="w-4 h-4" />
           </button>
@@ -182,7 +182,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
 
         {/* Error alert */}
         {errorMsg && (
-          <div className="mb-4 bg-red-50 border-2 border-red-500 text-red-700 text-xs font-bold rounded-xl p-3 flex items-center gap-2">
+          <div className="mb-4 bg-red-50 border border-red-300 text-red-700 text-xs font-bold rounded-xl p-3 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
             <span>{errorMsg}</span>
           </div>
@@ -193,7 +193,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
           <div className="space-y-4">
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-3 border-dashed border-emerald-600/70 hover:border-emerald-600 bg-emerald-50/50 hover:bg-emerald-50 rounded-2xl p-6 sm:p-7 text-center cursor-pointer transition-all"
+              className="border-2 border-dashed border-[#D5BEA1] hover:border-[#C66723] bg-white/70 hover:bg-[#FAF6F0] rounded-2xl p-6 sm:p-7 text-center cursor-pointer transition-all"
             >
               <input
                 ref={fileInputRef}
@@ -204,18 +204,18 @@ export default function QrisImportModal({ isOpen, onClose }) {
                 className="hidden"
               />
 
-              <div className="w-14 h-14 mx-auto rounded-2xl bg-white border-2 border-slate-900 flex items-center justify-center shadow-md mb-3 text-emerald-700">
+              <div className="w-14 h-14 mx-auto rounded-2xl bg-white border border-[#D5BEA1] flex items-center justify-center shadow-xs mb-3 text-[#C66723]">
                 <Upload className="w-7 h-7" />
               </div>
 
               <div>
-                <span className="font-black text-sm sm:text-base text-slate-900 block">
+                <span className="font-poster font-bold text-sm sm:text-base text-[#1C140E] block">
                   Pilih Satu atau BANYAK File PDF Laporan Sekaligus
                 </span>
-                <span className="text-xs text-slate-500 mt-1 block">
+                <span className="text-xs text-[#7A6855] mt-1 block">
                   Format: Merchant_Report-LAZ_AL_AZHAR-*.pdf (Multi-file upload)
                 </span>
-                <span className="inline-block mt-2 bg-emerald-700 text-white font-extrabold text-xs px-3.5 py-1.5 rounded-xl border border-emerald-800 shadow-xs">
+                <span className="inline-block mt-2 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-2xs">
                   + Klik untuk Memilih File PDF
                 </span>
               </div>
@@ -224,7 +224,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
             {/* List of Selected Files */}
             {files.length > 0 && (
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold text-slate-700 px-1">
+                <div className="flex items-center justify-between text-xs font-bold text-[#7A6855] px-1">
                   <span>File PDF Terpilih ({files.length} Dokumen):</span>
                   <button
                     type="button"
@@ -238,17 +238,17 @@ export default function QrisImportModal({ isOpen, onClose }) {
                   {files.map((f, idx) => (
                     <div
                       key={`${f.name}-${idx}`}
-                      className="bg-white border-2 border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-3 text-xs shadow-xs"
+                      className="bg-white border border-[#E5DAC8] rounded-xl p-2.5 flex items-center justify-between gap-3 text-xs shadow-2xs"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <div className="w-7 h-7 rounded-lg bg-red-100 border border-red-300 text-red-600 flex items-center justify-center shrink-0 font-mono font-bold text-[10px]">
                           PDF
                         </div>
                         <div className="truncate">
-                          <span className="font-bold text-slate-900 block truncate">
+                          <span className="font-bold text-[#1C140E] block truncate">
                             {f.name}
                           </span>
-                          <span className="text-[10px] text-slate-500 font-mono">
+                          <span className="text-[10px] text-[#7A6855] font-mono">
                             {(f.size / 1024).toFixed(1)} KB
                           </span>
                         </div>
@@ -259,7 +259,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                           e.stopPropagation();
                           handleRemoveFile(idx);
                         }}
-                        className="text-slate-400 hover:text-red-600 p-1 cursor-pointer"
+                        className="text-[#7A6855] hover:text-red-600 p-1 cursor-pointer"
                         title="Hapus file ini"
                       >
                         <X className="w-4 h-4" />
@@ -270,18 +270,18 @@ export default function QrisImportModal({ isOpen, onClose }) {
               </div>
             )}
 
-            <div className="bg-emerald-50 border-2 border-emerald-700/40 rounded-2xl p-3.5 text-xs text-slate-800">
-              <span className="font-bold block mb-1 text-emerald-800">ℹ️ Rekapitulasi Otomatis &amp; Anti-Duplikasi:</span>
-              <span>
+            <div className="bg-white/80 border border-[#E5DAC8] rounded-2xl p-3.5 text-xs text-[#1C140E]">
+              <span className="font-bold block mb-1 text-[#C66723]">ℹ️ Rekapitulasi Otomatis &amp; Anti-Duplikasi:</span>
+              <span className="text-[#7A6855]">
                 Sistem akan membedah seluruh file PDF yang Anda unggah secara otomatis, menggabungkan data transaksinya, menampilkan rekapitulasi per dokumen, dan menandai transaksi duplikat agar tidak terhitung ganda.
               </span>
             </div>
 
-            <div className="flex items-center justify-end gap-2.5 pt-2 border-t-2 border-slate-100">
+            <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-[#E8DDCD]">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2.5 border-2 border-slate-900 rounded-xl text-xs font-bold hover:bg-slate-100 cursor-pointer"
+                className="px-4 py-2.5 border border-[#D5BEA1] bg-white hover:bg-amber-50/50 rounded-xl text-xs font-bold text-[#7A6855] cursor-pointer"
               >
                 Batal
               </button>
@@ -289,7 +289,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                 type="button"
                 onClick={handleParse}
                 disabled={files.length === 0 || isParsing}
-                className="px-5 py-3 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-black shadow-md transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                className="px-5 py-3 sm:py-2.5 bg-[#C66723] hover:bg-[#b0581a] text-white font-poster font-bold rounded-xl text-sm sm:text-xs shadow-sm transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
               >
                 {isParsing ? (
                   <>
@@ -313,33 +313,33 @@ export default function QrisImportModal({ isOpen, onClose }) {
             
             {/* KPI Summary Banner */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              <div className="bg-slate-50 border-2 border-slate-800 rounded-xl p-3 shadow-xs">
-                <span className="text-[10px] font-bold text-slate-500 uppercase block">Total PDF</span>
-                <span className="font-mono text-base sm:text-lg font-black text-slate-900 block">
+              <div className="bg-white/90 border border-[#E5DAC8] rounded-xl p-3 shadow-2xs">
+                <span className="text-[10px] font-bold text-[#7A6855] uppercase block">Total PDF</span>
+                <span className="font-poster font-black text-base sm:text-lg text-[#C66723] block">
                   {fileSummaries.length || files.length} Dokumen
                 </span>
-                <span className="text-[10px] text-slate-500">Laporan QRIS Danamon</span>
+                <span className="text-[10px] text-[#7A6855]">Laporan QRIS Danamon</span>
               </div>
-              <div className="bg-slate-50 border-2 border-slate-800 rounded-xl p-3 shadow-xs">
-                <span className="text-[10px] font-bold text-slate-500 uppercase block">Total Terdeteksi</span>
-                <span className="font-mono text-base sm:text-lg font-black text-emerald-700 block">
+              <div className="bg-white/90 border border-[#E5DAC8] rounded-xl p-3 shadow-2xs">
+                <span className="text-[10px] font-bold text-[#7A6855] uppercase block">Total Terdeteksi</span>
+                <span className="font-poster font-black text-base sm:text-lg text-[#C66723] block">
                   {items.length} Transaksi
                 </span>
-                <span className="text-[10px] text-slate-600 font-bold block">{formatRupiah(totalDetectedAmount)}</span>
+                <span className="text-[10px] text-[#7A6855] font-bold block">{formatRupiah(totalDetectedAmount)}</span>
               </div>
-              <div className="bg-slate-50 border-2 border-slate-800 rounded-xl p-3 shadow-xs">
-                <span className="text-[10px] font-bold text-slate-500 uppercase block">Siap Diimpor</span>
-                <span className="font-mono text-base sm:text-lg font-black text-emerald-700 block">
+              <div className="bg-white/90 border border-[#E5DAC8] rounded-xl p-3 shadow-2xs">
+                <span className="text-[10px] font-bold text-[#7A6855] uppercase block">Siap Diimpor</span>
+                <span className="font-poster font-black text-base sm:text-lg text-[#C66723] block">
                   {selectedItems.length} Transaksi
                 </span>
                 <span className="text-[10px] font-bold text-emerald-800 block">{formatRupiah(selectedTotalAmount)}</span>
               </div>
-              <div className="bg-slate-50 border-2 border-slate-800 rounded-xl p-3 shadow-xs">
-                <span className="text-[10px] font-bold text-slate-500 uppercase block">Duplikat Terdeteksi</span>
-                <span className={`font-mono text-base sm:text-lg font-black ${duplicateCount > 0 ? 'text-amber-700' : 'text-slate-400'} block`}>
+              <div className="bg-white/90 border border-[#E5DAC8] rounded-xl p-3 shadow-2xs">
+                <span className="text-[10px] font-bold text-[#7A6855] uppercase block">Duplikat Terdeteksi</span>
+                <span className={`font-poster font-black text-base sm:text-lg ${duplicateCount > 0 ? 'text-amber-700' : 'text-[#7A6855]'} block`}>
                   {duplicateCount} Transaksi
                 </span>
-                <span className="text-[10px] text-slate-500 block">
+                <span className="text-[10px] text-[#7A6855] block">
                   {duplicateCount > 0 ? 'Dilewati otomatis' : 'Nol duplikasi'}
                 </span>
               </div>
@@ -347,13 +347,13 @@ export default function QrisImportModal({ isOpen, onClose }) {
 
             {/* Rekap Rincian per Dokumen PDF (Jika ada lebih dari 1 file) */}
             {fileSummaries.length > 1 && (
-              <div className="bg-slate-50 border-2 border-slate-800 rounded-xl p-3 space-y-2">
-                <div className="flex items-center justify-between text-xs font-black text-slate-800">
+              <div className="bg-white/80 border border-[#E5DAC8] rounded-xl p-3 space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-[#1C140E]">
                   <span className="flex items-center gap-1.5">
-                    <FileText className="w-3.5 h-3.5 text-emerald-700" />
+                    <FileText className="w-3.5 h-3.5 text-[#C66723]" />
                     <span>Rekap Rincian Tiap File PDF (Klik untuk filter tabel):</span>
                   </span>
-                  <span className="text-[11px] font-mono text-slate-500">
+                  <span className="text-[11px] font-mono text-[#7A6855]">
                     {fileSummaries.length} File Diproses
                   </span>
                 </div>
@@ -361,10 +361,10 @@ export default function QrisImportModal({ isOpen, onClose }) {
                   <button
                     type="button"
                     onClick={() => setSelectedFileFilter('all')}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                       selectedFileFilter === 'all'
-                        ? 'bg-emerald-700 text-white border-emerald-800 shadow-xs'
-                        : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
+                        ? 'bg-[#C66723] text-white border border-[#C66723] shadow-2xs'
+                        : 'bg-white text-[#7A6855] border border-[#E5DAC8] hover:bg-amber-50/50'
                     }`}
                   >
                     Semua File ({items.length})
@@ -374,10 +374,10 @@ export default function QrisImportModal({ isOpen, onClose }) {
                       key={`sum-${idx}`}
                       type="button"
                       onClick={() => setSelectedFileFilter(f.file_name)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                         selectedFileFilter === f.file_name
-                          ? 'bg-emerald-700 text-white border-emerald-800 shadow-xs'
-                          : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
+                          ? 'bg-[#C66723] text-white border border-[#C66723] shadow-2xs'
+                          : 'bg-white text-[#7A6855] border border-[#E5DAC8] hover:bg-amber-50/50'
                       }`}
                       title={f.file_name}
                     >
@@ -397,39 +397,39 @@ export default function QrisImportModal({ isOpen, onClose }) {
                 <button
                   type="button"
                   onClick={() => handleToggleSelectAll(!isAllSelected)}
-                  className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border-2 border-slate-900 rounded-xl text-xs font-bold cursor-pointer"
+                  className="px-3 py-1.5 bg-white hover:bg-amber-50/50 border border-[#D5BEA1] rounded-xl text-xs font-bold text-[#7A6855] cursor-pointer"
                 >
                   {isAllSelected ? 'Lepas Semua' : 'Pilih Semua'}
                 </button>
-                <span className="text-xs text-slate-600 font-medium">
+                <span className="text-xs text-[#7A6855] font-medium">
                   {selectedItems.length} dari {filteredItems.length} terpilih
                 </span>
               </div>
 
               {/* Search filter */}
               <div className="relative w-full sm:w-64">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#7A6855]" />
                 <input
                   type="text"
                   placeholder="Cari nama / ref / file..."
                   value={searchFilter}
                   onChange={(e) => setSearchFilter(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 border-2 border-slate-900 rounded-xl text-xs outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
+                  className="w-full pl-8 pr-3 py-1.5 border border-[#D5BEA1] rounded-xl text-xs outline-none focus:border-[#C66723] bg-white text-stone-900"
                 />
               </div>
             </div>
 
             {/* Interactive Review Table */}
-            <div className="border-2 border-slate-900 rounded-2xl overflow-hidden max-h-[360px] overflow-y-auto">
+            <div className="border border-[#E5DAC8] rounded-2xl overflow-hidden max-h-[360px] overflow-y-auto bg-white">
               <table className="w-full text-left border-collapse text-xs">
-                <thead className="bg-slate-100 border-b-2 border-slate-900 sticky top-0 z-10 font-bold text-slate-900">
+                <thead className="bg-[#FAF6F0] border-b border-[#E8DDCD] sticky top-0 z-10 font-bold text-[#1C140E]">
                   <tr>
                     <th className="p-2.5 text-center w-10">
                       <input
                         type="checkbox"
                         checked={isAllSelected}
                         onChange={(e) => handleToggleSelectAll(e.target.checked)}
-                        className="w-4 h-4 rounded border-2 border-slate-900 accent-emerald-600 cursor-pointer"
+                        className="w-4 h-4 rounded border border-[#D5BEA1] accent-[#C66723] cursor-pointer"
                       />
                     </th>
                     <th className="p-2.5 w-10 text-center">No</th>
@@ -453,8 +453,8 @@ export default function QrisImportModal({ isOpen, onClose }) {
                     return (
                       <tr
                         key={item.no}
-                        className={`hover:bg-emerald-50/50 transition-colors ${
-                          !item.selected ? 'opacity-50 bg-slate-50' : item.is_duplicate ? 'bg-amber-50/60' : ''
+                        className={`hover:bg-amber-50/40 transition-colors ${
+                          !item.selected ? 'opacity-50 bg-[#FAF6F0]' : item.is_duplicate ? 'bg-amber-50/60' : ''
                         }`}
                       >
                         <td className="p-2.5 text-center">
@@ -462,23 +462,23 @@ export default function QrisImportModal({ isOpen, onClose }) {
                             type="checkbox"
                             checked={item.selected}
                             onChange={() => handleToggleRow(originalIdx)}
-                            className="w-4 h-4 rounded border-2 border-slate-900 accent-emerald-600 cursor-pointer"
+                            className="w-4 h-4 rounded border border-[#D5BEA1] accent-[#C66723] cursor-pointer"
                           />
                         </td>
-                        <td className="p-2.5 text-center font-mono font-bold text-slate-500">
+                        <td className="p-2.5 text-center font-mono font-bold text-[#7A6855]">
                           {item.no}
                         </td>
-                        <td className="p-2.5 font-mono text-slate-700 whitespace-nowrap">
+                        <td className="p-2.5 font-mono text-stone-700 whitespace-nowrap">
                           {item.date || '-'}
                         </td>
                         {fileSummaries.length > 1 && (
-                          <td className="p-2.5 whitespace-nowrap text-[11px] font-mono text-slate-500">
-                            <span className="bg-slate-100 border border-slate-300 rounded px-1.5 py-0.5 truncate max-w-[120px] inline-block" title={item.source_file}>
+                          <td className="p-2.5 whitespace-nowrap text-[11px] font-mono text-[#7A6855]">
+                            <span className="bg-[#FAF6F0] border border-[#E5DAC8] rounded px-1.5 py-0.5 truncate max-w-[120px] inline-block" title={item.source_file}>
                               {item.source_file || '-'}
                             </span>
                           </td>
                         )}
-                        <td className="p-2.5 font-mono text-[11px] text-slate-500 whitespace-nowrap">
+                        <td className="p-2.5 font-mono text-[11px] text-[#7A6855] whitespace-nowrap">
                           {item.ref || '-'}
                         </td>
                         <td className="p-2.5">
@@ -486,11 +486,11 @@ export default function QrisImportModal({ isOpen, onClose }) {
                             type="text"
                             value={item.name}
                             onChange={(e) => handleNameChange(originalIdx, e.target.value)}
-                            className="w-full px-2 py-1 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 hover:border-slate-800 focus:border-emerald-600 outline-none bg-white"
+                            className="w-full px-2 py-1 border border-[#D5BEA1] rounded-lg text-xs font-bold text-stone-900 focus:border-[#C66723] outline-none bg-white"
                             title="Klik untuk koreksi nama donatur"
                           />
                         </td>
-                        <td className="p-2.5 text-right font-mono font-black text-emerald-700 whitespace-nowrap">
+                        <td className="p-2.5 text-right font-poster font-black text-[#C66723] whitespace-nowrap">
                           {formatRupiah(item.amount)}
                         </td>
                         <td className="p-2.5 text-center whitespace-nowrap">
@@ -517,7 +517,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                 type="button"
                 onClick={handleReset}
                 disabled={isImporting}
-                className="px-5 py-3 sm:py-2 border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-bold hover:bg-slate-100 cursor-pointer"
+                className="px-5 py-3 sm:py-2 border border-[#D5BEA1] bg-white hover:bg-amber-50/50 rounded-xl text-sm sm:text-xs font-bold text-[#7A6855] cursor-pointer"
               >
                 Pilih Ulang PDF
               </button>
@@ -527,7 +527,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                   type="button"
                   onClick={onClose}
                   disabled={isImporting}
-                  className="px-5 py-3 sm:py-2 border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-bold hover:bg-slate-100 cursor-pointer"
+                  className="px-5 py-3 sm:py-2 border border-[#D5BEA1] bg-white hover:bg-amber-50/50 rounded-xl text-sm sm:text-xs font-bold text-[#7A6855] cursor-pointer"
                 >
                   Batal
                 </button>
@@ -535,7 +535,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                   type="button"
                   onClick={handleConfirmImport}
                   disabled={selectedItems.length === 0 || isImporting}
-                  className="px-5 py-3 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-black shadow-md transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-5 py-3 sm:py-2.5 bg-[#C66723] hover:bg-[#b0581a] text-white font-poster font-bold rounded-xl text-sm sm:text-xs shadow-sm transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
                   {isImporting ? (
                     <>
@@ -558,34 +558,34 @@ export default function QrisImportModal({ isOpen, onClose }) {
         {/* STEP 3: SUCCESS FEEDBACK */}
         {step === 'success' && (
           <div className="text-center py-6 space-y-4">
-            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 border-3 border-slate-900 flex items-center justify-center shadow-md text-emerald-700">
+            <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 border-2 border-emerald-300 flex items-center justify-center shadow-sm text-emerald-700">
               <CheckCircle2 className="w-10 h-10" />
             </div>
 
             <div>
-              <h4 className="font-extrabold text-2xl text-emerald-800 uppercase">
+              <h4 className="font-poster font-black text-2xl text-[#C66723] uppercase">
                 ALHAMDULILLAH, IMPOR &amp; REKAP BERHASIL!
               </h4>
-              <p className="text-xs text-slate-600 font-semibold mt-1">
+              <p className="text-xs text-[#7A6855] font-semibold mt-1">
                 {successData?.message}
               </p>
             </div>
 
-            <div className="bg-emerald-50 border-2 border-slate-900 rounded-2xl p-4 max-w-sm mx-auto text-xs space-y-1.5 font-mono">
+            <div className="bg-white/90 border border-[#E5DAC8] rounded-2xl p-4 max-w-sm mx-auto text-xs space-y-1.5 font-mono text-[#1C140E]">
               <div className="flex justify-between">
-                <span>Total Dokumen PDF:</span>
-                <span className="font-bold text-slate-900">{files.length} File</span>
+                <span className="text-[#7A6855]">Total Dokumen PDF:</span>
+                <span className="font-bold text-[#1C140E]">{files.length} File</span>
               </div>
               <div className="flex justify-between">
-                <span>Berhasil diimpor:</span>
+                <span className="text-[#7A6855]">Berhasil diimpor:</span>
                 <span className="font-bold text-emerald-700">{successData?.imported_count || 0} transaksi</span>
               </div>
               <div className="flex justify-between">
-                <span>Total nominal masuk:</span>
+                <span className="text-[#7A6855]">Total nominal masuk:</span>
                 <span className="font-bold text-emerald-700">{formatRupiah(successData?.total_imported_amount || 0)}</span>
               </div>
               {successData?.skipped_count > 0 && (
-                <div className="flex justify-between text-slate-500">
+                <div className="flex justify-between text-[#7A6855]">
                   <span>Duplikat dilewati:</span>
                   <span>{successData?.skipped_count} transaksi</span>
                 </div>
@@ -596,7 +596,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="px-6 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-slate-900 rounded-xl text-xs font-bold shadow-md cursor-pointer"
+                className="px-6 py-2.5 bg-[#C66723] hover:bg-[#b0581a] text-white font-poster font-bold rounded-xl text-xs shadow-sm cursor-pointer"
               >
                 Selesai &amp; Tutup
               </button>

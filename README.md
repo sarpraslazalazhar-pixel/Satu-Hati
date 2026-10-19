@@ -58,10 +58,10 @@ composer setup
 Setelah itu isi `.env` (lihat bagian Konfigurasi), lalu:
 
 ```bash
-php artisan serve
+php artisan serve --port=8001
 ```
 
-Buka `http://localhost:8000/` untuk kiosk dan `http://localhost:8000/admin` untuk panel amil.
+Buka `http://localhost:8001/` untuk kiosk dan `http://localhost:8001/admin` untuk panel amil.
 
 ### Akun amil default
 

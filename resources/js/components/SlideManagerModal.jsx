@@ -125,27 +125,27 @@ export default function SlideManagerModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-stone-950/75 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white border-[3px] border-stone-900 rounded-3xl p-5 sm:p-6 max-w-2xl w-full shadow-brutal-lg animate-in zoom-in-95 my-6 text-stone-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-[#1C140E]/60 backdrop-blur-xs overflow-y-auto">
+      <div className="bg-[#FAF7F2] border-2 border-[#D88A3E]/40 rounded-3xl p-5 sm:p-6 max-w-2xl w-full shadow-2xl animate-in zoom-in-95 my-6 text-[#1C140E]">
         
         {/* Header */}
-        <div className="flex items-center justify-between pb-3.5 border-b-2 border-stone-900 mb-4">
+        <div className="flex items-center justify-between pb-3.5 border-b border-[#E8DDCD] mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-amber-400 border-2 border-stone-900 flex items-center justify-center font-bold text-lg shadow-brutal-sm">
+            <div className="w-10 h-10 rounded-xl bg-[#C66723] text-white flex items-center justify-center font-bold text-lg shadow-2xs">
               📸
             </div>
             <div>
-              <h3 className="font-display text-xl sm:text-2xl text-stone-900 leading-none">
+              <h3 className="font-poster font-black text-xl sm:text-2xl text-[#1C140E] leading-none">
                 KELOLA SLIDE FOTO KEGIATAN
               </h3>
-              <p className="text-xs text-stone-600 font-semibold mt-0.5">
+              <p className="text-xs text-[#7A6855] font-semibold mt-0.5">
                 Dokumentasi foto kegiatan yang tampil berputar di layar depan
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full border-2 border-stone-900 flex items-center justify-center hover:bg-stone-100 cursor-pointer"
+            className="w-8 h-8 rounded-full border border-[#D5BEA1] flex items-center justify-center hover:bg-amber-50 cursor-pointer text-[#7A6855]"
           >
             <X className="w-4 h-4" />
           </button>
@@ -153,28 +153,28 @@ export default function SlideManagerModal({ isOpen, onClose }) {
 
         {/* Feedback alerts */}
         {errorMsg && (
-          <div className="mb-3 bg-red-50 border-2 border-red-500 text-red-700 text-xs font-bold rounded-xl p-2.5 flex items-center gap-2">
+          <div className="mb-3 bg-red-50 border border-red-300 text-red-700 text-xs font-bold rounded-xl p-2.5 flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
         {successMsg && (
-          <div className="mb-3 bg-emerald-50 border-2 border-emerald-600 text-emerald-800 text-xs font-bold rounded-xl p-2.5 flex items-center gap-2">
+          <div className="mb-3 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-xl p-2.5 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>{successMsg}</span>
           </div>
         )}
 
         {/* Upload Form */}
-        <form onSubmit={handleAddSlide} className="bg-stone-50 border-2 border-stone-900 rounded-2xl p-4 mb-5 space-y-3">
-          <h4 className="font-poster font-black text-xs text-stone-900 uppercase flex items-center gap-1.5">
-            <Plus className="w-3.5 h-3.5 text-emerald-700" />
+        <form onSubmit={handleAddSlide} className="bg-white/80 border border-[#E5DAC8] rounded-2xl p-4 mb-5 space-y-3">
+          <h4 className="font-poster font-black text-xs text-[#1C140E] uppercase flex items-center gap-1.5">
+            <Plus className="w-3.5 h-3.5 text-[#C66723]" />
             <span>Tambah Slide Foto Baru</span>
           </h4>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-bold text-stone-700 mb-1">
+              <label className="block text-[11px] font-bold text-[#1C140E] mb-1">
                 Judul Kegiatan *
               </label>
               <input
@@ -182,13 +182,13 @@ export default function SlideManagerModal({ isOpen, onClose }) {
                 placeholder="Cth: Penyerahan Bantuan Pangan Palestina"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3 py-3 sm:py-2 border-2 border-stone-900 rounded-xl text-base sm:text-xs font-semibold outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
+                className="w-full px-3 py-3 sm:py-2 border border-[#D5BEA1] rounded-xl text-base sm:text-xs font-semibold outline-none focus:border-[#C66723] bg-white text-stone-900"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-stone-700 mb-1">
+              <label className="block text-[11px] font-bold text-[#1C140E] mb-1">
                 Label Tag / Badge
               </label>
               <input
@@ -196,13 +196,13 @@ export default function SlideManagerModal({ isOpen, onClose }) {
                 placeholder="Cth: AKSI KEMANUSIAAN"
                 value={badgeText}
                 onChange={(e) => setBadgeText(e.target.value)}
-                className="w-full px-3 py-3 sm:py-2 border-2 border-stone-900 rounded-xl text-base sm:text-xs font-semibold outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
+                className="w-full px-3 py-3 sm:py-2 border border-[#D5BEA1] rounded-xl text-base sm:text-xs font-semibold outline-none focus:border-[#C66723] bg-white text-stone-900"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold text-stone-700 mb-1">
+            <label className="block text-[11px] font-bold text-[#1C140E] mb-1">
               Deskripsi Singkat (Opsional)
             </label>
             <input
@@ -210,18 +210,18 @@ export default function SlideManagerModal({ isOpen, onClose }) {
               placeholder="Cth: Penyaluran logistik bersama relawan LAZ Al Azhar di kamp pengungsian"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-3 sm:py-2 border-2 border-stone-900 rounded-xl text-base sm:text-xs font-medium outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
+              className="w-full px-3 py-3 sm:py-2 border border-[#D5BEA1] rounded-xl text-base sm:text-xs font-medium outline-none focus:border-[#C66723] bg-white text-stone-900"
             />
           </div>
 
           {/* Image Picker */}
           <div>
-            <label className="block text-[11px] font-bold text-stone-700 mb-1">
+            <label className="block text-[11px] font-bold text-[#1C140E] mb-1">
               Upload Foto Kegiatan *
             </label>
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-stone-400 hover:border-stone-900 rounded-xl p-3 text-center cursor-pointer bg-white transition-colors flex items-center justify-center gap-3"
+              className="border-2 border-dashed border-[#D5BEA1] hover:border-[#C66723] rounded-xl p-3 text-center cursor-pointer bg-white transition-colors flex items-center justify-center gap-3"
             >
               <input
                 ref={fileInputRef}
@@ -235,17 +235,17 @@ export default function SlideManagerModal({ isOpen, onClose }) {
                   <img
                     src={imagePreview}
                     alt="Preview"
-                    className="w-16 h-12 object-cover rounded-lg border border-stone-300"
+                    className="w-16 h-12 object-cover rounded-lg border border-[#D5BEA1]"
                   />
                   <div className="text-left">
-                    <span className="text-xs font-bold text-emerald-800 block">{imageFile?.name}</span>
-                    <span className="text-[10px] text-stone-500">Klik untuk ganti gambar</span>
+                    <span className="text-xs font-bold text-[#C66723] block">{imageFile?.name}</span>
+                    <span className="text-[10px] text-[#7A6855]">Klik untuk ganti gambar</span>
                   </div>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 text-stone-600">
-                  <ImageIcon className="w-5 h-5 text-stone-500" />
-                  <span className="text-xs font-bold">Pilih File Foto (JPG / PNG / WebP)</span>
+                <div className="flex items-center gap-2 text-[#7A6855]">
+                  <ImageIcon className="w-5 h-5 text-[#C66723]" />
+                  <span className="text-xs font-bold text-[#1C140E]">Pilih File Foto (JPG / PNG / WebP)</span>
                 </div>
               )}
             </div>
@@ -255,7 +255,7 @@ export default function SlideManagerModal({ isOpen, onClose }) {
             <button
               type="submit"
               disabled={isUploading}
-              className="w-full sm:w-auto px-5 py-3 sm:py-2 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-stone-900 rounded-xl text-sm sm:text-xs font-bold shadow-brutal-sm cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50"
+              className="w-full sm:w-auto px-5 py-3 sm:py-2 bg-[#C66723] hover:bg-[#b0581a] text-white font-poster font-bold rounded-xl text-sm sm:text-xs shadow-sm cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50"
             >
               {isUploading ? (
                 <>
@@ -274,16 +274,16 @@ export default function SlideManagerModal({ isOpen, onClose }) {
 
         {/* Existing Slides List */}
         <div>
-          <h4 className="font-poster font-black text-xs text-stone-900 uppercase mb-2">
+          <h4 className="font-poster font-black text-xs text-[#1C140E] uppercase mb-2">
             Slide yang Sedang Tayang ({slides.length})
           </h4>
 
           {isLoading ? (
-            <div className="py-6 text-center text-xs text-stone-500 font-bold">
+            <div className="py-6 text-center text-xs text-[#7A6855] font-bold">
               Memuat slide...
             </div>
           ) : slides.length === 0 ? (
-            <div className="py-6 text-center text-xs text-stone-500 font-bold bg-stone-50 border border-stone-200 rounded-xl">
+            <div className="py-6 text-center text-xs text-[#7A6855] font-bold bg-white/70 border border-[#E5DAC8] rounded-xl">
               Belum ada foto kegiatan. Silakan upload slide pertama di atas!
             </div>
           ) : (
@@ -291,28 +291,28 @@ export default function SlideManagerModal({ isOpen, onClose }) {
               {slides.map((s) => (
                 <div
                   key={s.id}
-                  className="bg-white border-2 border-stone-900 rounded-xl p-2.5 flex items-center justify-between gap-3 shadow-sm"
+                  className="bg-white border border-[#E5DAC8] rounded-xl p-2.5 flex items-center justify-between gap-3 shadow-2xs"
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
                     <img
                       src={s.image_path}
                       alt={s.title}
-                      className="w-14 h-11 object-cover rounded-lg border border-stone-300 shrink-0"
+                      className="w-14 h-11 object-cover rounded-lg border border-[#D5BEA1] shrink-0"
                     />
                     <div className="truncate">
                       <span className="text-[9px] font-black uppercase px-1.5 py-0.2 bg-amber-100 text-amber-900 rounded border border-amber-300 inline-block mb-0.5">
                         {s.badge_text || 'KEGIATAN'}
                       </span>
-                      <h5 className="font-bold text-xs text-stone-900 truncate">{s.title}</h5>
+                      <h5 className="font-poster font-bold text-xs text-[#1C140E] truncate">{s.title}</h5>
                       {s.description && (
-                        <p className="text-[10px] text-stone-500 truncate">{s.description}</p>
+                        <p className="text-[10px] text-[#7A6855] truncate">{s.description}</p>
                       )}
                     </div>
                   </div>
 
                   <button
                     onClick={() => handleDeleteSlide(s.id)}
-                    className="p-2.5 sm:p-1.5 hover:bg-red-50 text-red-600 rounded-lg border border-stone-300 hover:border-red-600 transition-colors shrink-0 cursor-pointer"
+                    className="p-2.5 sm:p-1.5 hover:bg-red-50 text-red-600 rounded-lg border border-[#D5BEA1] hover:border-red-600 transition-colors shrink-0 cursor-pointer"
                     title="Hapus slide"
                   >
                     <Trash2 className="w-5 h-5 sm:w-4 sm:h-4" />

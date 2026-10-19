@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
-import { Sparkles, Heart, X, CheckCircle2 } from 'lucide-react';
+import { Sparkles, X } from 'lucide-react';
 import { useDonation } from '../context/DonationContext';
 
 export default function DonationCelebrationPopup() {
@@ -9,7 +9,6 @@ export default function DonationCelebrationPopup() {
 
   useEffect(() => {
     if (latestApprovedDonation) {
-      // Trigger festive confetti
       try {
         confetti({
           particleCount: 100,
@@ -34,7 +33,6 @@ export default function DonationCelebrationPopup() {
         // ignore
       }
 
-      // Auto dismiss after 7 seconds
       const timer = setTimeout(() => {
         setLatestApprovedDonation(null);
       }, 7000);
@@ -60,41 +58,41 @@ export default function DonationCelebrationPopup() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-brutal/40 backdrop-blur-xs"
+            className="fixed inset-0 bg-stone-900/40 backdrop-blur-xs"
           />
 
           {/* Celebration Card */}
           <motion.div
-            initial={{ scale: 0.8, y: 40, opacity: 0 }}
+            initial={{ scale: 0.8, y: 30, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.8, y: 30, opacity: 0 }}
+            exit={{ scale: 0.8, y: 20, opacity: 0 }}
             transition={{ type: 'spring', damping: 22, stiffness: 300 }}
-            className="relative pointer-events-auto max-w-md w-full bg-white border-[3.5px] border-brutal rounded-3xl p-6 sm:p-7 shadow-brutal-lg text-center overflow-hidden z-10"
+            className="relative pointer-events-auto max-w-md w-full bg-white border-2 border-[#C66723]/40 rounded-3xl p-6 sm:p-7 shadow-2xl text-center overflow-hidden z-10 text-[#1C140E]"
           >
             {/* Confetti Decorative Badge */}
-            <div className="inline-flex items-center gap-1.5 bg-comic-yellow text-brutal font-mono font-black text-xs px-3.5 py-1.5 rounded-full border-2 border-brutal mb-4 shadow-brutal-sm">
-              <Sparkles className="w-4 h-4 fill-brutal" />
+            <div className="inline-flex items-center gap-1.5 bg-amber-50 text-[#C66723] font-mono font-black text-xs px-3.5 py-1.5 rounded-full border border-[#C66723]/30 mb-4 shadow-2xs">
+              <Sparkles className="w-4 h-4 fill-[#C66723]" />
               <span>ALHAMDULILLAH! DONASI MASUK</span>
             </div>
 
             {/* Close Button */}
             <button
               onClick={() => setLatestApprovedDonation(null)}
-              className="absolute right-4 top-4 w-8 h-8 rounded-full border-2 border-brutal flex items-center justify-center hover:bg-gray-100 cursor-pointer"
+              className="absolute right-4 top-4 w-8 h-8 rounded-full border border-stone-200 text-stone-400 flex items-center justify-center hover:bg-stone-100 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
             {/* Donor Name & Amount */}
             <div className="mb-4">
-              <h3 className="font-display text-2xl sm:text-3xl text-forest tracking-wide leading-tight">
+              <h3 className="font-poster font-black text-2xl sm:text-3xl text-[#1C140E] tracking-wide leading-tight">
                 {latestApprovedDonation.donorName || 'Hamba Allah'}
               </h3>
-              <div className="font-mono text-3xl sm:text-4xl font-black text-forest mt-2">
+              <div className="font-mono text-3xl sm:text-4xl font-black text-[#C66723] mt-2">
                 {formatRupiah(latestApprovedDonation.amount)}
               </div>
               <div className="flex items-center justify-center gap-2 mt-2">
-                <span className="inline-block bg-lime text-brutal text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md border border-brutal">
+                <span className="inline-block bg-orange-50 text-[#C66723] text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md border border-orange-200">
                   {latestApprovedDonation.paymentMethod === 'qris'
                     ? 'QRIS DANAMON'
                     : latestApprovedDonation.paymentMethod === 'cash'
@@ -106,19 +104,19 @@ export default function DonationCelebrationPopup() {
 
             {/* Prayer message if any */}
             {latestApprovedDonation.prayerMessage && (
-              <div className="bg-mint/40 border-2 border-brutal rounded-2xl p-3 mb-4 text-xs italic text-gray-700">
+              <div className="bg-[#FAF7F2] border border-[#EFE8DC] rounded-2xl p-3 mb-4 text-xs italic text-stone-600">
                 "{latestApprovedDonation.prayerMessage}"
               </div>
             )}
 
-            <p className="text-xs text-gray-600 font-semibold mb-2">
+            <p className="text-xs text-stone-500 font-semibold mb-2">
               Jazakumullah Khairan Katsiran atas kebaikan dan kepedulian Anda.
             </p>
 
             {/* Dismiss CTA */}
             <button
               onClick={() => setLatestApprovedDonation(null)}
-              className="w-full mt-2 bg-forest hover:bg-forest/90 text-white font-bold text-xs py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer"
+              className="w-full mt-2 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs py-2.5 rounded-xl shadow-sm cursor-pointer transition-colors"
             >
               Tutup
             </button>
