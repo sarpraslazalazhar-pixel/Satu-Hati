@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, HandHeart, BookOpen } from 'lucide-react';
 import { useDonation } from '../context/DonationContext';
@@ -36,6 +36,31 @@ export default function SinglePageKiosk() {
       maximumFractionDigits: 0
     }).format(val || 0);
   };
+
+  const amountText = formatRupiah(animatedAmount);
+
+  // Auto-fit nominal: ukuran huruf = lebar kartu / panjang teks.
+  // Selalu sebesar mungkin tanpa pernah keluar kartu, di layar berapapun.
+  // Faktor 0.64 = lebar karakter monospace (0.6) + 6% cadangan untuk efek pop.
+  const amountWrapRef = useRef(null);
+  const [amountFontSize, setAmountFontSize] = useState(96);
+
+  useLayoutEffect(() => {
+    const wrap = amountWrapRef.current;
+    if (!wrap) return undefined;
+
+    const calc = () => {
+      const avail = wrap.clientWidth;
+      if (!avail) return;
+      const size = Math.min(148, Math.floor(avail / (amountText.length * 0.64)));
+      setAmountFontSize(Math.max(40, size));
+    };
+
+    calc();
+    window.addEventListener('resize', calc);
+
+    return () => window.removeEventListener('resize', calc);
+  }, [amountText]);
 
   return (
     <div
@@ -108,9 +133,10 @@ export default function SinglePageKiosk() {
                 <span>TOTAL DONASI TERKUMPUL</span>
                 <Heart className="w-4 h-4 text-red-500 fill-red-500" />
               </div>
-              <div className="w-full flex items-center justify-center text-center my-1">
+              <div ref={amountWrapRef} className="w-full flex items-center justify-center text-center my-1 overflow-hidden">
                 <span
-                  className={`font-mono font-black text-7xl sm:text-8xl md:text-9xl lg:text-[128px] xl:text-[148px] text-emerald-300 tracking-tight leading-none text-center transition-[transform,filter,text-shadow] duration-500 ${
+                  style={{ fontSize: `${amountFontSize}px` }}
+                  className={`font-mono font-black text-emerald-300 tracking-tight leading-none text-center whitespace-nowrap transition-[transform,filter,text-shadow] duration-500 ${
                     isBumping
                       ? 'scale-[1.06] drop-shadow-[0_0_70px_rgba(52,211,153,1)]'
                       : 'scale-100 drop-shadow-[0_10px_60px_rgba(52,211,153,1)]'
