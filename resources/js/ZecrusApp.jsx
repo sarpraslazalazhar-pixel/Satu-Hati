@@ -31,7 +31,7 @@ function MainContent() {
 
   // Halaman Publik Utama (/) - 1 Layar Kiosk Display (No Scroll)
   return (
-    <div className="h-screen max-h-screen bg-black text-white flex flex-col font-sans selection:bg-red-600 selection:text-white relative overflow-hidden">
+    <div className="min-h-screen md:h-screen md:max-h-screen bg-black text-white flex flex-col font-sans selection:bg-red-600 selection:text-white relative md:overflow-hidden">
       <SinglePageKiosk />
     </div>
   );

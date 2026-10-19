@@ -7,7 +7,7 @@ export default function DonorToastNotification({ donations = [] }) {
   const donationsRef = useRef(donations);
   donationsRef.current = donations;
 
-  // Cycle every 5 seconds per donor
+  // Cycle every 5 seconds - pilih donatur SECARA ACAK (bukan berurutan)
   useEffect(() => {
     if (!donations || donations.length <= 1) return;
 
@@ -16,7 +16,14 @@ export default function DonorToastNotification({ donations = [] }) {
       timeoutId = setTimeout(() => {
         const len = donationsRef.current?.length || 0;
         if (len > 1) {
-          setCurrentIndex((prev) => (prev + 1) % len);
+          setCurrentIndex((prev) => {
+            let next = prev;
+            // Ulang sampai dapat indeks berbeda supaya tidak tampil dua kali berturut.
+            while (next === prev) {
+              next = Math.floor(Math.random() * len);
+            }
+            return next;
+          });
         }
         scheduleNext();
       }, 5000);
@@ -48,7 +55,7 @@ export default function DonorToastNotification({ donations = [] }) {
 
   return (
     /* Posisi: Di sebelah kanan di bawah gambar masjid (Sesuai Permintaan User) */
-    <div className="fixed bottom-7 sm:bottom-10 right-3 sm:right-6 lg:right-8 z-40 pointer-events-none select-none w-72 sm:w-80 max-w-[85vw]">
+    <div className="fixed bottom-7 sm:bottom-10 right-3 sm:right-6 lg:right-8 z-40 pointer-events-none select-none w-72 sm:w-80 max-w-[85vw] hidden md:block">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentDonor.id ? `${currentDonor.id}-${currentIndex}` : currentIndex}

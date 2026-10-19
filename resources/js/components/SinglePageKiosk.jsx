@@ -64,12 +64,9 @@ export default function SinglePageKiosk() {
 
   return (
     <div
-      className="w-full h-screen max-h-screen overflow-hidden relative select-none font-sans text-white bg-black"
+      className="kiosk-bg w-full min-h-screen md:h-screen md:max-h-screen md:overflow-hidden relative select-none font-sans text-white bg-black"
       style={{
-        backgroundImage: "url('/images/bg-palestina.webp?v=7')",
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundImage: "url('/images/bg-palestina.webp?v=7')"
       }}
     >
       {/* 1. ANIMATED FIRE EMBERS SVG OVERLAY */}
@@ -101,7 +98,7 @@ export default function SinglePageKiosk() {
       </div>
 
       {/* 4. CENTER CONTENT CONTAINER (Diposisikan Ditengah Sempurna & Lebar Maksimal) */}
-      <div className="relative z-10 w-[98%] md:w-[62%] lg:w-[60%] max-w-[1100px] h-full flex flex-col justify-center my-auto py-2 mx-auto">
+      <div className="relative z-10 w-[98%] md:w-[62%] lg:w-[60%] max-w-[1100px] md:h-full flex flex-col justify-center py-4 md:py-2 my-auto mx-auto">
         {/* ========================================================
             MAIN CONTENT: ROW 1 (TOTAL DONASI MAKSIMAL) + ROW 2 (2 KOLOM BESAR & LEGA)
         ======================================================== */}
@@ -154,15 +151,16 @@ export default function SinglePageKiosk() {
           </div>
 
           {/* ROW 2: 2 KOLOM SEJAJAR (DIPERBESAR & LEGA UNTUK LAYAR PANGGUNG) */}
-          <div className="w-full h-[335px] sm:h-[365px] lg:h-[390px] grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4 items-stretch shrink-0">
+          {/* HP: menumpuk vertikal, tinggi mengikuti isi. md+: grid 2 kolom seperti sebelumnya. */}
+          <div className="w-full flex flex-col md:grid md:grid-cols-12 gap-3 sm:gap-4 items-stretch shrink-0 md:h-[365px] lg:h-[390px]">
             
             {/* KOLOM KIRI (6/12): LIST DONATUR (3 NAMA LEGA & AUTO-SCROLL) */}
-            <div className="md:col-span-6 flex flex-col h-full min-h-0">
+            <div className="md:col-span-6 flex flex-col h-[38vh] md:h-full min-h-0">
               <DonorFeedList donations={verifiedDonations} />
             </div>
 
             {/* KOLOM KANAN (6/12): SCAN QRIS (BESAR & SEJAJAR DENGAN LIST DONATUR) */}
-            <div className="md:col-span-6 flex flex-col h-full min-h-0">
+            <div className="md:col-span-6 flex flex-col h-auto md:h-full min-h-0">
               <div className="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 flex flex-col justify-between h-full min-h-0 relative overflow-hidden shadow-2xl border border-blue-400/35">
                 
                 {/* Header Title with Heart Icon */}

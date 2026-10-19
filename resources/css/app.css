@@ -41,6 +41,19 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Latar kiosk: HP = cover (tak melar), desktop = 100% x 100% seperti aslinya */
+.kiosk-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+  .kiosk-bg {
+    background-size: 100% 100%;
+  }
+}
+
 /* Glassmorphism Card Style - Vibrant Luminous Navy / Royal Blue */
 .glass-card {
   background: linear-gradient(145deg, rgba(16, 32, 62, 0.88) 0%, rgba(10, 20, 42, 0.94) 100%);
