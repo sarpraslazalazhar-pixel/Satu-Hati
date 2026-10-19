@@ -289,7 +289,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                 type="button"
                 onClick={handleParse}
                 disabled={files.length === 0 || isParsing}
-                className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-slate-900 rounded-xl text-xs font-black shadow-md transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                className="px-5 py-3 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-black shadow-md transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
               >
                 {isParsing ? (
                   <>
@@ -517,7 +517,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                 type="button"
                 onClick={handleReset}
                 disabled={isImporting}
-                className="px-4 py-2 border-2 border-slate-900 rounded-xl text-xs font-bold hover:bg-slate-100 cursor-pointer"
+                className="px-5 py-3 sm:py-2 border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-bold hover:bg-slate-100 cursor-pointer"
               >
                 Pilih Ulang PDF
               </button>
@@ -527,7 +527,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                   type="button"
                   onClick={onClose}
                   disabled={isImporting}
-                  className="px-4 py-2 border-2 border-slate-900 rounded-xl text-xs font-bold hover:bg-slate-100 cursor-pointer"
+                  className="px-5 py-3 sm:py-2 border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-bold hover:bg-slate-100 cursor-pointer"
                 >
                   Batal
                 </button>
@@ -535,7 +535,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                   type="button"
                   onClick={handleConfirmImport}
                   disabled={selectedItems.length === 0 || isImporting}
-                  className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-slate-900 rounded-xl text-xs font-black shadow-md transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
+                  className="px-5 py-3 sm:py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-slate-900 rounded-xl text-sm sm:text-xs font-black shadow-md transition-all cursor-pointer flex items-center gap-2 disabled:opacity-50"
                 >
                   {isImporting ? (
                     <>

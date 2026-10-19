@@ -259,10 +259,10 @@ export default function ExcelImportModal({ isOpen, onClose }) {
                   placeholder="Cari nama / ref / metode / tanggal..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 border-2 border-brutal rounded-xl text-xs font-semibold outline-none focus:border-forest"
+                  className="w-full pl-9 pr-3 py-3 sm:py-1.5 border-2 border-brutal rounded-xl text-base sm:text-xs font-semibold outline-none focus:border-forest"
                 />
               </div>
-              <label className="flex items-center gap-1.5 text-[11px] font-bold cursor-pointer px-2.5 py-1.5 border-2 border-brutal rounded-xl bg-white">
+              <label className="flex items-center gap-1.5 text-xs sm:text-[11px] font-bold cursor-pointer px-3 py-2.5 sm:px-2.5 sm:py-1.5 border-2 border-brutal rounded-xl bg-white">
                 <input
                   type="checkbox"
                   checked={allSelected}
@@ -379,21 +379,21 @@ export default function ExcelImportModal({ isOpen, onClose }) {
               </table>
             </div>
 
-            <div className="flex items-center justify-between gap-2 pt-3 mt-1 border-t-2 border-stone-200 shrink-0">
+            <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 pt-3 mt-1 border-t-2 border-stone-200 shrink-0">
               <button
                 onClick={() => setStep('upload')}
-                className="px-3.5 py-2 border-2 border-brutal rounded-xl text-xs font-bold hover:bg-gray-100 cursor-pointer"
+                className="px-4 py-3 sm:py-2 border-2 border-brutal rounded-xl text-sm sm:text-xs font-bold hover:bg-gray-100 cursor-pointer"
               >
                 ← Ganti File
               </button>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold text-gray-600">
+              <div className="flex items-center gap-2 sm:ml-auto">
+                <span className="text-xs sm:text-[11px] font-bold text-gray-600">
                   {selectedItems.length} baris • {formatRupiah(selectedTotal)}
                 </span>
                 <button
                   onClick={handleImport}
                   disabled={isImporting || selectedItems.length === 0}
-                  className="px-5 py-2.5 bg-forest hover:bg-forest-dark text-white border-2 border-brutal rounded-xl text-xs font-extrabold shadow-brutal-sm cursor-pointer flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-5 py-3 sm:py-2.5 bg-forest hover:bg-forest-dark text-white border-2 border-brutal rounded-xl text-sm sm:text-xs font-extrabold shadow-brutal-sm cursor-pointer flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isImporting ? (
                     <>

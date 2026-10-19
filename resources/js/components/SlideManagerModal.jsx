@@ -182,7 +182,7 @@ export default function SlideManagerModal({ isOpen, onClose }) {
                 placeholder="Cth: Penyerahan Bantuan Pangan Palestina"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3 py-2 border-2 border-stone-900 rounded-xl text-xs font-semibold outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
+                className="w-full px-3 py-3 sm:py-2 border-2 border-stone-900 rounded-xl text-base sm:text-xs font-semibold outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
                 required
               />
             </div>
@@ -196,7 +196,7 @@ export default function SlideManagerModal({ isOpen, onClose }) {
                 placeholder="Cth: AKSI KEMANUSIAAN"
                 value={badgeText}
                 onChange={(e) => setBadgeText(e.target.value)}
-                className="w-full px-3 py-2 border-2 border-stone-900 rounded-xl text-xs font-semibold outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
+                className="w-full px-3 py-3 sm:py-2 border-2 border-stone-900 rounded-xl text-base sm:text-xs font-semibold outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function SlideManagerModal({ isOpen, onClose }) {
               placeholder="Cth: Penyaluran logistik bersama relawan LAZ Al Azhar di kamp pengungsian"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border-2 border-stone-900 rounded-xl text-xs font-medium outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
+              className="w-full px-3 py-3 sm:py-2 border-2 border-stone-900 rounded-xl text-base sm:text-xs font-medium outline-none focus:ring-1 focus:ring-emerald-600 bg-white"
             />
           </div>
 
@@ -255,7 +255,7 @@ export default function SlideManagerModal({ isOpen, onClose }) {
             <button
               type="submit"
               disabled={isUploading}
-              className="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-stone-900 rounded-xl text-xs font-bold shadow-brutal-sm cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+              className="w-full sm:w-auto px-5 py-3 sm:py-2 bg-emerald-700 hover:bg-emerald-800 text-white border-2 border-stone-900 rounded-xl text-sm sm:text-xs font-bold shadow-brutal-sm cursor-pointer flex items-center justify-center gap-1.5 disabled:opacity-50"
             >
               {isUploading ? (
                 <>
@@ -312,10 +312,10 @@ export default function SlideManagerModal({ isOpen, onClose }) {
 
                   <button
                     onClick={() => handleDeleteSlide(s.id)}
-                    className="p-1.5 hover:bg-red-50 text-red-600 rounded-lg border border-stone-300 hover:border-red-600 transition-colors shrink-0 cursor-pointer"
+                    className="p-2.5 sm:p-1.5 hover:bg-red-50 text-red-600 rounded-lg border border-stone-300 hover:border-red-600 transition-colors shrink-0 cursor-pointer"
                     title="Hapus slide"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-5 h-5 sm:w-4 sm:h-4" />
                   </button>
                 </div>
               ))}

@@ -97,7 +97,7 @@ export default function AdminPanel() {
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setShowManualModal(true)}
-            className="flex items-center gap-1.5 bg-lime hover:bg-lime/80 text-brutal font-extrabold text-xs px-3.5 py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+            className="flex items-center gap-1.5 bg-lime hover:bg-lime/80 text-brutal font-extrabold text-sm sm:text-xs px-3.5 py-3 sm:py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
           >
             <PlusCircle className="w-4 h-4" />
             <span>+ Input Cash / Komitmen</span>
@@ -105,7 +105,7 @@ export default function AdminPanel() {
 
           <button
             onClick={() => setShowQrisModal(true)}
-            className="flex items-center gap-1.5 bg-comic-yellow hover:bg-comic-yellow/80 text-brutal font-extrabold text-xs px-3.5 py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+            className="flex items-center gap-1.5 bg-comic-yellow hover:bg-comic-yellow/80 text-brutal font-extrabold text-sm sm:text-xs px-3.5 py-3 sm:py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
           >
             <FileText className="w-4 h-4" />
             <span>📄 Impor QRIS (PDF)</span>
@@ -113,7 +113,7 @@ export default function AdminPanel() {
 
           <button
             onClick={() => setShowExcelModal(true)}
-            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-xs px-3.5 py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+            className="flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-sm sm:text-xs px-3.5 py-3 sm:py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
           >
             <FileSpreadsheet className="w-4 h-4" />
             <span>📊 Impor Excel</span>
@@ -121,14 +121,14 @@ export default function AdminPanel() {
 
           <button
             onClick={() => setShowSlideModal(true)}
-            className="flex items-center gap-1.5 bg-white hover:bg-stone-100 text-stone-900 font-extrabold text-xs px-3.5 py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+            className="flex items-center gap-1.5 bg-white hover:bg-stone-100 text-stone-900 font-extrabold text-sm sm:text-xs px-3.5 py-3 sm:py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
           >
             <ImageIcon className="w-4 h-4 text-emerald-700" />
             <span>📸 Slide Kegiatan</span>
           </button>
           <button
             onClick={() => setShowReportModal(true)}
-            className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs px-3.5 py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+            className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm sm:text-xs px-3.5 py-3 sm:py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
             title="Rekapitulasi Donasi & Cetak / Simpan PDF"
           >
             <Printer className="w-4 h-4" />
@@ -137,7 +137,7 @@ export default function AdminPanel() {
 
           <button
             onClick={() => { window.location.href = '/api/admin/donations/export-excel'; }}
-            className="flex items-center gap-1.5 bg-white hover:bg-lime/20 text-brutal font-bold text-xs px-3.5 py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer"
+            className="flex items-center gap-1.5 bg-white hover:bg-lime/20 text-brutal font-bold text-sm sm:text-xs px-3.5 py-3 sm:py-2.5 rounded-xl border-2 border-brutal shadow-brutal-sm cursor-pointer"
             title="Unduh seluruh donasi sebagai file Excel (.xlsx)"
           >
             <Download className="w-4 h-4 text-emerald-700" />
@@ -223,7 +223,7 @@ export default function AdminPanel() {
         <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
         <button
           onClick={() => setActiveFilter('all')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
+          className={`px-4 py-2.5 sm:py-1.5 rounded-full text-sm sm:text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
             activeFilter === 'all'
               ? 'bg-forest text-white shadow-brutal-sm'
               : 'bg-white text-gray-700'
@@ -234,7 +234,7 @@ export default function AdminPanel() {
 
         <button
           onClick={() => setActiveFilter('qris')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
+          className={`px-4 py-2.5 sm:py-1.5 rounded-full text-sm sm:text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
             activeFilter === 'qris'
               ? 'bg-comic-yellow text-brutal shadow-brutal-sm'
               : 'bg-white text-gray-700'
@@ -245,7 +245,7 @@ export default function AdminPanel() {
 
         <button
           onClick={() => setActiveFilter('cash')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
+          className={`px-4 py-2.5 sm:py-1.5 rounded-full text-sm sm:text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
             activeFilter === 'cash'
               ? 'bg-lime text-brutal shadow-brutal-sm'
               : 'bg-white text-gray-700'
@@ -256,7 +256,7 @@ export default function AdminPanel() {
 
         <button
           onClick={() => setActiveFilter('committed')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
+          className={`px-4 py-2.5 sm:py-1.5 rounded-full text-sm sm:text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
             activeFilter === 'committed'
               ? 'bg-amber-300 text-brutal shadow-brutal-sm'
               : 'bg-white text-gray-700'
@@ -267,7 +267,7 @@ export default function AdminPanel() {
 
         <button
           onClick={() => setActiveFilter('pending')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
+          className={`px-4 py-2.5 sm:py-1.5 rounded-full text-sm sm:text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
             activeFilter === 'pending'
               ? 'bg-stone-800 text-white shadow-brutal-sm'
               : 'bg-white text-gray-700'
@@ -278,7 +278,7 @@ export default function AdminPanel() {
 
         <button
           onClick={() => setActiveFilter('verified')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
+          className={`px-4 py-2.5 sm:py-1.5 rounded-full text-sm sm:text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
             activeFilter === 'verified'
               ? 'bg-lime text-brutal shadow-brutal-sm'
               : 'bg-white text-gray-700'
@@ -289,7 +289,7 @@ export default function AdminPanel() {
 
         <button
           onClick={() => setActiveFilter('rejected')}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
+          className={`px-4 py-2.5 sm:py-1.5 rounded-full text-sm sm:text-xs font-bold border-2 border-brutal transition-all cursor-pointer ${
             activeFilter === 'rejected'
               ? 'bg-error text-white shadow-brutal-sm'
               : 'bg-white text-gray-700'
@@ -306,7 +306,7 @@ export default function AdminPanel() {
             placeholder="Cari donatur / ref / file PDF..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 bg-white border-2 border-brutal rounded-xl text-xs font-semibold outline-none focus:border-forest"
+            className="w-full pl-9 pr-3 py-3 sm:py-1.5 bg-white border-2 border-brutal rounded-xl text-base sm:text-xs font-semibold outline-none focus:border-forest"
           />
         </div>
       </div>
