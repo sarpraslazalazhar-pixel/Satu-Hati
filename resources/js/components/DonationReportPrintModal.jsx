@@ -99,14 +99,11 @@ export default function DonationReportPrintModal({
           {/* Formal Letterhead */}
           <div className="text-center pb-4 border-b border-[#D5BEA1] mb-5">
             <span className="text-xs font-poster font-bold tracking-widest text-[#C66723] uppercase block">
-              LEMBAGA AMIL ZAKAT (LAZ) AL AZHAR PEDULI
+              
             </span>
             <h2 className="font-poster font-black text-xl sm:text-2xl text-[#1C140E] mt-1 uppercase tracking-tight">
               LAPORAN REKAPITULASI RESMI PENERIMAAN DONASI
             </h2>
-            <p className="text-xs font-semibold text-[#7A6855] mt-0.5">
-              Program Kemanusiaan &amp; Pendidikan: Satu Hati untuk Palestina
-            </p>
             <div className="mt-2 text-[11px] text-[#7A6855] font-mono">
               Dicetak pada: {todayFormatted} • Sistem Realtime LAZ Al Azhar Peduli
             </div>

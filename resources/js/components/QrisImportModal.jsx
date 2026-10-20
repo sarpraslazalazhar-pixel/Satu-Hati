@@ -165,11 +165,8 @@ export default function QrisImportModal({ isOpen, onClose }) {
             </div>
             <div>
               <h3 className="font-poster font-black text-base sm:text-lg text-[#1C140E] leading-tight">
-                Impor &amp; Rekap PDF QRIS Danamon
+                Impor &amp; Rekap PDF Data
               </h3>
-              <p className="text-xs text-[#7A6855] font-medium">
-                Dukungan multi-file PDF sekaligus dengan rekapitulasi otomatis
-              </p>
             </div>
           </div>
           <button
@@ -318,7 +315,7 @@ export default function QrisImportModal({ isOpen, onClose }) {
                 <span className="font-poster font-black text-base sm:text-lg text-[#C66723] block">
                   {fileSummaries.length || files.length} Dokumen
                 </span>
-                <span className="text-[10px] text-[#7A6855]">Laporan QRIS Danamon</span>
+                <span className="text-[10px] text-[#7A6855]">Laporan QRIS</span>
               </div>
               <div className="bg-white/90 border border-[#E5DAC8] rounded-xl p-3 shadow-2xs">
                 <span className="text-[10px] font-bold text-[#7A6855] uppercase block">Total Terdeteksi</span>

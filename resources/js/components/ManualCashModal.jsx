@@ -84,11 +84,8 @@ export default function ManualCashModal({ isOpen, onClose }) {
             </div>
             <div>
               <h3 className="font-poster font-black text-xl sm:text-2xl text-[#1C140E] leading-none">
-                INPUT DONASI CASH / MANUAL
+                INPUT DONASI
               </h3>
-              <p className="text-xs text-[#7A6855] font-semibold mt-1">
-                Penerimaan tunai langsung atau komitmen donatur • Amil LAZ Al Azhar Peduli
-              </p>
             </div>
           </div>
           <button
