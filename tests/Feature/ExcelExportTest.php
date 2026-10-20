@@ -80,21 +80,75 @@ class ExcelExportTest extends TestCase
         $response = $this->actingAs($this->admin)->get('/api/admin/donations/export-excel');
 
         $response->assertOk();
-        $this->assertStringContainsString('spreadsheetml.sheet', $response->headers->get('content-type'));
+        $this->assertStringContainsString('spreadsheetml.sheet', (string) $response->headers->get('content-type'));
+        $this->assertStringContainsString('Rekap_Donasi_Satu_Hati_Palestina_', (string) $response->headers->get('content-disposition'));
 
         $file = $response->baseResponse->getFile()->getPathname();
         $parsed = (new ExcelImportService)->read($file);
 
         $this->assertSame('Rekap Donasi', $parsed['sheet']);
-        $this->assertSame('Nama Donatur', $parsed['headers'][0]['label']);
-        // Header + 2 baris data (urut terbaru dulu dari ->latest()).
+        $this->assertSame([
+            'No',
+            'Nama Donatur',
+            'No HP',
+            'Email',
+            'Nominal (Rp)',
+            'Status',
+            'Metode',
+            'Tanggal',
+            'No Referensi',
+            'Sumber File',
+            'Pesan / Doa',
+            'Diverifikasi',
+        ], array_column($parsed['headers'], 'label'));
         $this->assertCount(2, $parsed['rows']);
-        // Kolom: 0=Nama, 3=Nominal, 4=Status, 5=Metode.
-        $this->assertSame('Siti Aminah', $parsed['rows'][0][0]);
-        $this->assertSame('Komitmen - Belum Donasi', $parsed['rows'][0][4]);
-        $this->assertSame('Komitmen', $parsed['rows'][0][5]);
-        $this->assertSame('Budi Santoso', $parsed['rows'][1][0]);
-        $this->assertSame('1500000', $parsed['rows'][1][3]);
-        $this->assertSame('Verified', $parsed['rows'][1][4]);
+
+        // Baris 1: Siti Aminah (terbaru)
+        $this->assertSame('1', (string) $parsed['rows'][0][0]);
+        $this->assertSame('Siti Aminah', $parsed['rows'][0][1]);
+        $this->assertSame('750000', (string) $parsed['rows'][0][4]);
+        $this->assertSame('Komitmen - Belum Donasi', $parsed['rows'][0][5]);
+        $this->assertSame('Komitmen', $parsed['rows'][0][6]);
+
+        // Baris 2: Budi Santoso
+        $this->assertSame('2', (string) $parsed['rows'][1][0]);
+        $this->assertSame('Budi Santoso', $parsed['rows'][1][1]);
+        $this->assertSame('1500000', (string) $parsed['rows'][1][4]);
+        $this->assertSame('Verified', $parsed['rows'][1][5]);
+        $this->assertSame('QRIS', $parsed['rows'][1][6]);
+    }
+
+    public function test_export_includes_styling_widths_and_autofilter(): void
+    {
+        $path = (new ExcelExportService(
+            ['No', 'Nama', 'Nominal'],
+            [[1, 'Budi', 50000]]
+        ))
+            ->setColumnWidths([5, 20, 15])
+            ->setCurrencyColumns([2])
+            ->writeToTempFile();
+
+        $zip = new \ZipArchive;
+        $this->assertTrue($zip->open($path));
+
+        $stylesXml = $zip->getFromName('xl/styles.xml');
+        $this->assertNotFalse($stylesXml);
+        $this->assertStringContainsString('FFF5EDDF', $stylesXml);
+        $this->assertStringContainsString('FFD5BEA1', $stylesXml);
+        $this->assertStringContainsString('numFmtId="3"', $stylesXml);
+
+        $sheetXml = $zip->getFromName('xl/worksheets/sheet1.xml');
+        $this->assertNotFalse($sheetXml);
+        $this->assertStringContainsString('<pane ySplit="1"', $sheetXml);
+        $this->assertStringContainsString('state="frozen"', $sheetXml);
+        $this->assertStringContainsString('<col min="1" max="1" width="5"', $sheetXml);
+        $this->assertStringContainsString('<col min="2" max="2" width="20"', $sheetXml);
+        $this->assertStringContainsString('<col min="3" max="3" width="15"', $sheetXml);
+        $this->assertStringContainsString('s="1"', $sheetXml); // Header style
+        $this->assertStringContainsString('s="2"', $sheetXml); // Currency style
+        $this->assertStringContainsString('<autoFilter ref="A1:C2"/>', $sheetXml);
+
+        $zip->close();
+        @unlink($path);
     }
 }

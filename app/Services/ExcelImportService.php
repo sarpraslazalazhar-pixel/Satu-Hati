@@ -27,6 +27,7 @@ class ExcelImportService
         'amount' => 'amount',
         'nilai' => 'amount',
         'total' => 'amount',
+        'nominalrp' => 'amount',
 
         'status' => 'status',
         'metode' => 'method',
@@ -54,6 +55,7 @@ class ExcelImportService
         'catatan' => 'message',
         'keterangan' => 'message',
         'message' => 'message',
+        'pesandoa' => 'message',
     ];
 
     private const HEADER_SCAN_ROWS = 10;

@@ -644,37 +644,43 @@ class DonationController extends Controller
     {
         $donations = Donation::latest()->get();
 
-        $rows = $donations->map(function (Donation $d) {
+        $no = 1;
+        $rows = $donations->map(function (Donation $d) use (&$no) {
             return [
+                $no++,
                 $d->donor_name,
-                $d->is_anonymous ? 'Hamba Allah' : $d->donor_name,
                 $d->donor_phone,
+                $d->donor_email,
                 $d->amount,
                 $this->statusLabel($d),
                 $this->methodLabel($d),
-                $d->donated_at?->format('Y-m-d H:i') ?? $d->created_at?->format('Y-m-d H:i'),
+                $d->donated_at?->format('d/m/Y H:i') ?? $d->created_at?->format('d/m/Y H:i'),
                 $d->reference_no,
                 $d->source_file,
                 $d->prayer_message,
-                $d->verified_at?->format('Y-m-d H:i'),
+                $d->verified_at?->format('d/m/Y H:i'),
             ];
         })->all();
 
         $exporter = (new ExcelExportService([
+            'No',
             'Nama Donatur',
-            'Tampilan Publik',
             'No HP',
-            'Nominal',
+            'Email',
+            'Nominal (Rp)',
             'Status',
             'Metode',
             'Tanggal',
             'No Referensi',
             'Sumber File',
             'Pesan / Doa',
-            'Diverifikasi Pada',
-        ], $rows))->setSheetName('Rekap Donasi');
+            'Diverifikasi',
+        ], $rows))
+            ->setSheetName('Rekap Donasi')
+            ->setColumnWidths([5, 28, 18, 25, 18, 22, 12, 18, 20, 35, 40, 18])
+            ->setCurrencyColumns([4]);
 
-        return $exporter->download('rekap_donasi_laz_alazhar_'.now()->format('Ymd_His').'.xlsx');
+        return $exporter->download('Rekap_Donasi_Satu_Hati_Palestina_'.now()->format('Ymd_His').'.xlsx');
     }
 
     private function statusLabel(Donation $d): string
