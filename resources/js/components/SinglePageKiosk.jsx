@@ -116,7 +116,7 @@ export default function SinglePageKiosk() {
           <img
             src="/images/logo-al-azhar.png"
             alt="Lembaga Amil Zakat Al Azhar"
-            className="h-13 sm:h-16 lg:h-18 w-auto object-contain"
+            className="h-13 sm:h-16 lg:h-20 w-auto object-contain"
           />
         </header>
 
