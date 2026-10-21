@@ -463,6 +463,161 @@ class DonationController extends Controller
     }
 
     /**
+     * Perbarui data donasi oleh admin.
+     */
+    public function update(Request $request, int|string $id)
+    {
+        $donation = Donation::findOrFail($id);
+
+        $isCommitment = $request->boolean('is_commitment');
+
+        $validated = $request->validate([
+            'donor_name' => ['required', 'string', 'max:150'],
+            'donor_phone' => [$isCommitment ? 'required' : 'nullable', 'string', 'max:30'],
+            'donor_email' => ['nullable', 'email', 'max:150'],
+            'amount' => ['required', 'integer', 'min:1000'],
+            'payment_method' => ['nullable', 'string', 'max:30'],
+            'reference_no' => ['nullable', 'string', 'max:100'],
+            'is_commitment' => ['nullable', 'boolean'],
+            'is_anonymous' => ['nullable', 'boolean'],
+            'prayer_message' => ['nullable', 'string', 'max:500'],
+            'status' => ['required', 'string', 'in:pending,verified,rejected'],
+            'donated_at' => ['nullable', 'date'],
+        ]);
+
+        $newStatus = $validated['status'];
+        $verifiedAt = $donation->verified_at;
+
+        if ($newStatus === 'verified' && ! $verifiedAt) {
+            $verifiedAt = now();
+        } elseif ($newStatus !== 'verified') {
+            $verifiedAt = null;
+        }
+
+        $donatedAt = ! empty($validated['donated_at'])
+            ? Carbon::parse($validated['donated_at'])
+            : $donation->donated_at;
+
+        $donation->update([
+            'donor_name' => trim($validated['donor_name']),
+            'donor_phone' => ! empty($validated['donor_phone']) ? trim($validated['donor_phone']) : ($donation->donor_phone ?: '-'),
+            'donor_email' => ! empty($validated['donor_email']) ? trim($validated['donor_email']) : null,
+            'amount' => $validated['amount'],
+            'payment_method' => $validated['payment_method'] ?? $donation->payment_method ?? 'online',
+            'reference_no' => ! empty($validated['reference_no']) ? trim($validated['reference_no']) : null,
+            'is_commitment' => $isCommitment,
+            'is_anonymous' => $request->boolean('is_anonymous'),
+            'prayer_message' => ! empty($validated['prayer_message']) ? trim($validated['prayer_message']) : null,
+            'status' => $newStatus,
+            'donated_at' => $donatedAt,
+            'verified_at' => $verifiedAt,
+        ]);
+
+        try {
+            $action = $donation->status === 'verified' ? 'approved' : 'rejected';
+            broadcast(new DonationStatusUpdated($donation, $action));
+        } catch (\Throwable $e) {
+            report($e);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data donasi berhasil diperbarui.',
+            'donation' => $donation->toAdminArray(),
+        ]);
+    }
+
+    /**
+     * Hapus data donasi oleh admin.
+     */
+    public function destroy(int|string $id)
+    {
+        $donation = Donation::findOrFail($id);
+        $clone = clone $donation;
+        $donation->delete();
+
+        if ($clone->status === 'verified') {
+            try {
+                broadcast(new DonationStatusUpdated($clone, 'rejected'));
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Donasi berhasil dihapus.',
+        ]);
+    }
+
+    /**
+     * Ringkasan daftar file yang pernah diimpor (PDF / Excel).
+     */
+    public function importedFilesSummary()
+    {
+        $files = Donation::whereNotNull('source_file')
+            ->where('source_file', '!=', '')
+            ->selectRaw('source_file, count(*) as total_records, sum(amount) as total_amount, sum(case when status = "verified" then amount else 0 end) as verified_amount, min(created_at) as first_imported_at, max(created_at) as last_imported_at')
+            ->groupBy('source_file')
+            ->orderByDesc('last_imported_at')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'sourceFile' => $row->source_file,
+                    'totalRecords' => (int) $row->total_records,
+                    'totalAmount' => (int) $row->total_amount,
+                    'verifiedAmount' => (int) $row->verified_amount,
+                    'firstImportedAt' => $row->first_imported_at ? Carbon::parse($row->first_imported_at)->format('d M Y H:i') : null,
+                    'lastImportedAt' => $row->last_imported_at ? Carbon::parse($row->last_imported_at)->format('d M Y H:i') : null,
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'files' => $files,
+        ]);
+    }
+
+    /**
+     * Rollback / Hapus seluruh data donasi dari suatu file sumber (misal salah impor PDF/Excel).
+     */
+    public function rollbackSourceFile(Request $request)
+    {
+        $validated = $request->validate([
+            'source_file' => ['required', 'string'],
+        ]);
+
+        $sourceFile = trim($validated['source_file']);
+        $query = Donation::where('source_file', $sourceFile);
+        $count = $query->count();
+
+        if ($count === 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ditemukan data donasi dengan file sumber tersebut.',
+            ], 404);
+        }
+
+        $hasVerified = (clone $query)->where('status', 'verified')->exists();
+        $query->delete();
+
+        if ($hasVerified) {
+            try {
+                $dummy = new Donation(['status' => 'rejected', 'donor_name' => 'System', 'amount' => 0]);
+                broadcast(new DonationStatusUpdated($dummy, 'rejected'));
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => sprintf('Berhasil membatalkan impor. %d transaksi dari file "%s" telah dihapus.', $count, $sourceFile),
+            'deleted_count' => $count,
+        ]);
+    }
+
+    /**
      * Input donasi tunai / offline langsung verified oleh panitia.
      */
     public function offline(Request $request)

@@ -35,6 +35,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/donations', [DonationController::class, 'adminList']);
     Route::patch('/donations/{id}/approve', [DonationController::class, 'approve']);
     Route::patch('/donations/{id}/reject', [DonationController::class, 'reject']);
+    Route::match(['put', 'patch'], '/donations/{id}', [DonationController::class, 'update']);
+    Route::delete('/donations/{id}', [DonationController::class, 'destroy']);
+    Route::get('/donations/imported-files', [DonationController::class, 'importedFilesSummary']);
+    Route::post('/donations/rollback-file', [DonationController::class, 'rollbackSourceFile']);
     Route::post('/donations/offline', [DonationController::class, 'offline']);
     Route::post('/donations/manual-cash', [DonationController::class, 'manualCash']);
     Route::post('/donations/parse-pdf', [DonationController::class, 'parsePdf']);

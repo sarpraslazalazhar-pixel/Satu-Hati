@@ -161,7 +161,7 @@ export function DonationProvider({ children }) {
         progressPercentage: e.progressPercentage,
         verifiedCount: e.verifiedCount
       }));
-      if (e.action === 'approved' && e.donation) {
+      if ((e.action === 'approved' || e.action === 'updated') && e.donation) {
         setLatestApprovedDonation(e.donation);
         setVerifiedDonations((prev) => {
           // Hindari duplikasi jika id sudah ada
@@ -170,8 +170,12 @@ export function DonationProvider({ children }) {
           }
           return [e.donation, ...prev];
         });
-      } else if (e.action === 'rejected' && e.donation) {
-        setVerifiedDonations((prev) => prev.filter((item) => item.id !== e.donation.id));
+      } else if (e.action === 'rejected') {
+        if (e.donation?.id) {
+          setVerifiedDonations((prev) => prev.filter((item) => item.id !== e.donation.id));
+        } else {
+          fetchPublicData();
+        }
       }
     });
 
@@ -243,6 +247,113 @@ export function DonationProvider({ children }) {
       fetchAdminData();
     }
   };
+  // Update donasi oleh admin
+  const updateDonation = async (id, payload) => {
+    try {
+      const res = await fetch(`/api/admin/donations/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          donor_name: payload.donorName,
+          donor_phone: payload.donorPhone,
+          donor_email: payload.donorEmail,
+          amount: Number(payload.amount),
+          payment_method: payload.paymentMethod,
+          reference_no: payload.referenceNo,
+          is_commitment: Boolean(payload.isCommitment),
+          is_anonymous: Boolean(payload.isAnonymous),
+          prayer_message: payload.prayerMessage,
+          status: payload.status,
+          donated_at: payload.donatedAt
+        })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        fetchPublicData();
+        fetchAdminData();
+        return { success: true, message: data.message, donation: data.donation };
+      } else {
+        return { success: false, message: data.message || 'Gagal memperbarui donasi' };
+      }
+    } catch (err) {
+      console.error('[ZECRUS] Error update donasi:', err);
+      return { success: false, message: 'Terjadi kesalahan koneksi server' };
+    }
+  };
+
+  // Hapus donasi satuan oleh admin
+  const deleteDonation = async (id) => {
+    try {
+      const res = await fetch(`/api/admin/donations/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json'
+        }
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setAllAdminDonations((prev) => prev.filter((d) => d.id !== id));
+        fetchPublicData();
+        fetchAdminData();
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, message: data.message || 'Gagal menghapus donasi' };
+      }
+    } catch (err) {
+      console.error('[ZECRUS] Error delete donasi:', err);
+      return { success: false, message: 'Terjadi kesalahan koneksi server' };
+    }
+  };
+
+  // Ambil ringkasan file impor (PDF / Excel)
+  const fetchImportedFiles = async () => {
+    try {
+      const res = await fetch('/api/admin/donations/imported-files', {
+        headers: {
+          Accept: 'application/json'
+        }
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        return { success: true, files: data.files || [] };
+      }
+      return { success: false, files: [], message: data.message };
+    } catch (err) {
+      console.error('[ZECRUS] Error fetch imported files:', err);
+      return { success: false, files: [], message: 'Gagal memuat daftar file impor' };
+    }
+  };
+
+  // Rollback / hapus seluruh transaksi dari suatu file sumber
+  const rollbackImportedFile = async (sourceFile) => {
+    try {
+      const res = await fetch('/api/admin/donations/rollback-file', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({ source_file: sourceFile })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        fetchPublicData();
+        fetchAdminData();
+        return { success: true, message: data.message, deletedCount: data.deleted_count };
+      }
+      return { success: false, message: data.message || 'Gagal membatalkan impor file' };
+    } catch (err) {
+      console.error('[ZECRUS] Error rollback file:', err);
+      return { success: false, message: 'Terjadi kesalahan koneksi server' };
+    }
+  };
+
 
   // Input manual donasi cash / komitmen oleh amil
   const submitManualCash = async ({ donorName, donorPhone, amount, donatedAt, isCommitment, prayerMessage }) => {
@@ -407,6 +518,10 @@ export function DonationProvider({ children }) {
         approveDonation,
         rejectDonation,
         submitManualCash,
+        updateDonation,
+        deleteDonation,
+        fetchImportedFiles,
+        rollbackImportedFile,
         parseQrisPdf,
         importPdfBatch,
         parseExcel,

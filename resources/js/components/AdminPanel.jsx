@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useDonation } from '../context/DonationContext';
-import { Check, X, Download, PlusCircle, AlertCircle, Phone, RefreshCw, ShieldAlert, ArrowLeft, UserCheck, FileText, DollarSign, Calendar, Image as ImageIcon, Printer, Search, FileSpreadsheet, Wallet, Heart } from 'lucide-react';
+import { Check, X, Download, PlusCircle, AlertCircle, Phone, RefreshCw, ShieldAlert, ArrowLeft, UserCheck, FileText, DollarSign, Calendar, Image as ImageIcon, Printer, Search, FileSpreadsheet, Wallet, Heart, Pencil, Trash2 } from 'lucide-react';
 import ManualCashModal from './ManualCashModal';
 import QrisImportModal from './QrisImportModal';
 import ExcelImportModal from './ExcelImportModal';
 import SlideManagerModal from './SlideManagerModal';
 import DonationReportPrintModal from './DonationReportPrintModal';
+import EditDonationModal from './EditDonationModal';
+import ImportRollbackModal from './ImportRollbackModal';
 export default function AdminPanel() {
   const {
     donations,
@@ -13,6 +15,7 @@ export default function AdminPanel() {
     campaign,
     approveDonation,
     rejectDonation,
+    deleteDonation,
     currentUser,
     refetchAdmin
   } = useDonation();
@@ -24,6 +27,18 @@ export default function AdminPanel() {
   const [showSlideModal, setShowSlideModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [editingDonation, setEditingDonation] = useState(null);
+  const [showRollbackModal, setShowRollbackModal] = useState(false);
+
+  const handleDeleteDonation = async (item) => {
+    const confirmText = `Apakah Anda yakin ingin menghapus data donasi dari "${item.donorName}" sebesar ${formatRupiah(item.amount)}?\n\nData yang dihapus akan otomatis dikurangi dari total capaian dan tidak dapat dikembalikan.`;
+    if (!window.confirm(confirmText)) return;
+
+    const res = await deleteDonation(item.id);
+    if (!res.success) {
+      alert(res.message || 'Gagal menghapus donasi');
+    }
+  };
   const isCommittedPaid = (d) => d.isCommitment && d.status === 'verified';
 
   const qrisList = donations.filter((d) => d.paymentMethod === 'qris');
@@ -110,6 +125,13 @@ export default function AdminPanel() {
             className="bg-white hover:bg-[#FDF9F5] text-emerald-700 border border-[#D5BEA1] font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-xs cursor-pointer transition-all flex items-center gap-1.5"
           >
             <span>📊 Impor Excel</span>
+          </button>
+          <button
+            onClick={() => setShowRollbackModal(true)}
+            className="bg-white hover:bg-red-50 text-red-700 border border-red-200 font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-xs cursor-pointer transition-all flex items-center gap-1.5"
+            title="Kelola & batalkan seluruh transaksi dari file impor jika salah upload/tarik"
+          >
+            <span>📂 Rollback File Impor</span>
           </button>
 
           <button
@@ -363,13 +385,15 @@ export default function AdminPanel() {
                   {/* Row 2 */}
                   <div className="flex flex-wrap items-center gap-3 text-xs text-[#8C7A6B] font-medium">
                     {item.sourceFile && (
-                      <span
-                        className="bg-[#FAF6F0] text-stone-700 font-mono text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#D5BEA1] flex items-center gap-1"
-                        title={`Audit Log: Berasal dari dokumen ${item.sourceFile}`}
+                      <button
+                        type="button"
+                        onClick={() => setShowRollbackModal(true)}
+                        className="bg-[#FAF6F0] hover:bg-amber-100/70 text-stone-700 font-mono text-[10px] font-bold px-2 py-0.5 rounded-md border border-[#D5BEA1] flex items-center gap-1 cursor-pointer transition-colors"
+                        title={`Audit Log: Berasal dari dokumen ${item.sourceFile}. Klik untuk kelola/rollback file ini.`}
                       >
                         <FileText className="w-2.5 h-2.5 text-[#C66723]" />
                         <span className="truncate max-w-[200px] sm:max-w-xs">{item.sourceFile}</span>
-                      </span>
+                      </button>
                     )}
 
                     <span className="flex items-center gap-1">
@@ -398,34 +422,53 @@ export default function AdminPanel() {
                     {formatRupiah(item.amount)}
                   </span>
 
-                  {item.status === 'pending' && (
-                    <div className="flex items-center gap-1.5 mt-1">
+                  <div className="flex items-center gap-1.5 mt-1 flex-wrap justify-end">
+                    {item.status === 'pending' && (
+                      <>
+                        <button
+                          onClick={() => approveDonation(item.id)}
+                          className="flex items-center gap-1 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-2.5 py-1.5 rounded-xl shadow-2xs cursor-pointer transition-colors"
+                          title="Setujui donasi dan tambahkan ke progress bar"
+                        >
+                          <Check className="w-3.5 h-3.5" /> Approve
+                        </button>
+                        <button
+                          onClick={() => rejectDonation(item.id)}
+                          className="flex items-center gap-1 bg-white hover:bg-red-50 text-red-600 font-bold text-xs px-2 py-1.5 rounded-xl border border-red-200 cursor-pointer transition-colors"
+                          title="Tolak donasi jika tidak ada di mutasi"
+                        >
+                          <X className="w-3.5 h-3.5" /> Tolak
+                        </button>
+                      </>
+                    )}
+
+                    {item.isCommitment && !isCommittedPaid(item) && item.status !== 'rejected' && (
                       <button
                         onClick={() => approveDonation(item.id)}
-                        className="flex items-center gap-1 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-3 py-1.5 rounded-xl shadow-2xs cursor-pointer transition-colors"
-                        title="Setujui donasi dan tambahkan ke progress bar"
+                        className="flex items-center gap-1 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-2.5 py-1.5 rounded-xl shadow-2xs cursor-pointer transition-colors"
+                        title="Tandai komitmen ini sudah dibayar/donasi — akan masuk total progres & tampil di kiosk"
                       >
-                        <Check className="w-3.5 h-3.5" /> Approve
+                        <Check className="w-3.5 h-3.5" /> Bayar
                       </button>
-                      <button
-                        onClick={() => rejectDonation(item.id)}
-                        className="flex items-center gap-1 bg-white hover:bg-red-50 text-red-600 font-bold text-xs px-2.5 py-1.5 rounded-xl border border-red-200 cursor-pointer transition-colors"
-                        title="Tolak donasi jika tidak ada di mutasi"
-                      >
-                        <X className="w-3.5 h-3.5" /> Tolak
-                      </button>
-                    </div>
-                  )}
+                    )}
 
-                  {item.isCommitment && !isCommittedPaid(item) && item.status !== 'rejected' && (
                     <button
-                      onClick={() => approveDonation(item.id)}
-                      className="flex items-center gap-1 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-3 py-1.5 rounded-xl shadow-2xs cursor-pointer transition-colors mt-1"
-                      title="Tandai komitmen ini sudah dibayar/donasi — akan masuk total progres & tampil di kiosk"
+                      onClick={() => setEditingDonation(item)}
+                      className="flex items-center gap-1 bg-white hover:bg-amber-50 text-[#C66723] font-bold text-xs px-2.5 py-1.5 rounded-xl border border-[#D5BEA1] cursor-pointer transition-colors"
+                      title="Edit data donatur / nominal / status"
                     >
-                      <Check className="w-3.5 h-3.5" /> Tandai Sudah Donasi
+                      <Pencil className="w-3.5 h-3.5" />
+                      <span>Edit</span>
                     </button>
-                  )}
+
+                    <button
+                      onClick={() => handleDeleteDonation(item)}
+                      className="flex items-center gap-1 bg-white hover:bg-red-50 text-red-600 font-bold text-xs px-2 py-1.5 rounded-xl border border-red-200 cursor-pointer transition-colors"
+                      title="Hapus data donasi ini"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
 
                   {!item.isCommitment && item.status === 'verified' && (
                     <span className="text-[11px] text-[#8C7A6B] font-medium">
@@ -472,6 +515,17 @@ export default function AdminPanel() {
         donations={donations}
         currentAmount={currentAmount}
         campaign={campaign}
+      />
+
+      <EditDonationModal
+        isOpen={!!editingDonation}
+        donation={editingDonation}
+        onClose={() => setEditingDonation(null)}
+      />
+
+      <ImportRollbackModal
+        isOpen={showRollbackModal}
+        onClose={() => setShowRollbackModal(false)}
       />
     </section>
   );

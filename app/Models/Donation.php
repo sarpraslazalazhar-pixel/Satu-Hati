@@ -18,6 +18,7 @@ class Donation extends Model
         'reference_no',
         'source_file',
         'is_commitment',
+        'is_anonymous',
         'prayer_message',
         'status',
         'tako_gift_id',

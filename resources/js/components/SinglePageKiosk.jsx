@@ -90,7 +90,7 @@ export default function SinglePageKiosk() {
 
   return (
     <div
-      className="kiosk-bg w-full min-h-screen relative select-none font-sans text-[#1C140E] bg-[#EFE8DD] flex flex-col justify-between p-3 sm:p-5 lg:p-6"
+      className="kiosk-bg w-full min-h-screen relative select-none font-sans text-[#1C140E] bg-[#EFE8DD] flex flex-col justify-between pt-2 sm:pt-3 pb-3 sm:pb-5 px-3 sm:px-5 lg:px-6"
       style={{
         backgroundImage: "url('/images/bg-desert.webp')",
         backgroundPosition: 'center bottom'
@@ -103,16 +103,16 @@ export default function SinglePageKiosk() {
       <SandParticleOverlay />
 
       {/* Main Content Area */}
-      <div className="relative z-10 w-full max-w-[1120px] mx-auto flex flex-col my-auto py-2">
+      <div className="relative z-10 w-full max-w-[1120px] mx-auto flex flex-col my-auto pt-0 pb-1">
         
         {/* HEADER: LOGO AL AZHAR & SATU HATI UNTUK PALESTINA */}
-        <header className="flex items-center justify-center gap-5 sm:gap-7 mb-3 sm:mb-4">
+        <header className="flex items-center justify-center gap-5 sm:gap-7 mb-2.5 sm:mb-3 -mt-1 sm:-mt-2">
           <img
             src="/images/logo-satu-hati.png"
             alt="Satu Hati untuk Palestina"
             className="h-16 sm:h-20 lg:h-22 w-auto object-contain"
           />
-          <div className="w-[1.5px] h-10 sm:h-12 lg:h-16 bg-[#8C7A65]/40" />
+          <div className="w-[1.5px] h-9 sm:h-11 lg:h-14 bg-[#8C7A65]/60" />
           <img
             src="/images/logo-al-azhar.png"
             alt="Lembaga Amil Zakat Al Azhar"
@@ -129,7 +129,8 @@ export default function SinglePageKiosk() {
               <img
                 src="/images/hero-figure-card.webp"
                 alt="Pejuang Palestina"
-                className="h-full w-full object-cover object-left"
+                className="h-full w-full object-cover"
+                style={{ objectPosition: 'left 20%' }}
               />
             </div>
 
@@ -165,17 +166,22 @@ export default function SinglePageKiosk() {
               </div>
 
               {/* Progress Bar & Target */}
-              <div className="w-full flex justify-end mt-1 sm:mt-1.5">
-                <div className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[390px]">
-                  <div className="w-full bg-[#FAF0E6] border border-[#DECAAB] h-2 sm:h-2.5 rounded-full overflow-hidden p-0.5 mb-1">
+              <div className="w-full flex justify-end mt-1.5 sm:mt-2">
+                <div className="w-full max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[520px]">
+                  <div className="w-full bg-[#FAF0E6] border border-[#DECAAB] h-3.5 sm:h-4 lg:h-4.5 rounded-full overflow-hidden p-0.5 sm:p-1 shadow-inner mb-1.5">
                     <div
-                      className="bg-[#C86A27] h-full rounded-full transition-all duration-700 ease-out"
+                      className="bg-gradient-to-r from-[#C66723] via-[#D8782E] to-[#F18938] h-full rounded-full transition-all duration-700 ease-out shadow-xs"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
-                  <div className="flex items-center justify-between text-[10.5px] sm:text-xs text-[#8C7A65]">
-                    <span className="font-medium">Target Donasi</span>
-                    <span className="text-[#331D0C] font-bold font-poster">
+                  <div className="flex items-center justify-between text-[11px] sm:text-xs text-[#8C7A65] font-semibold">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-medium text-[#7A6855]">Target Donasi</span>
+                      <span className="bg-[#FAF0E6] text-[#C66723] text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full border border-[#DECAAB]/80">
+                        {pct.toFixed(1)}%
+                      </span>
+                    </div>
+                    <span className="text-[#331D0C] font-bold font-poster text-xs sm:text-sm">
                       {formatRupiah(targetAmt)}
                     </span>
                   </div>
