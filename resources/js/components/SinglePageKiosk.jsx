@@ -5,7 +5,6 @@ import useCountUp from '../hooks/useCountUp';
 import SandParticleOverlay from './SandParticleOverlay';
 import DonorFeedList from './DonorFeedList';
 import DonorToastNotification from './DonorToastNotification';
-import DonationCelebrationPopup from './DonationCelebrationPopup';
 
 const DEFAULT_NEWS = [
   {
@@ -148,9 +147,6 @@ export default function SinglePageKiosk() {
                     Total Donasi Palestina
                   </h2>
                 </div>
-                <span className="text-xs sm:text-sm font-medium text-[#8C7A65]">
-                  {Number(campaign.verifiedCount || 5345).toLocaleString('id-ID')} Donatur Terverifikasi
-                </span>
               </div>
 
               {/* Nominal Besar */}
@@ -270,9 +266,6 @@ export default function SinglePageKiosk() {
 
       {/* Floating Pop-Up Donatur Terbaru */}
       <DonorToastNotification donations={verifiedDonations} />
-
-      {/* Selebrasi Pop-up Real-time */}
-      <DonationCelebrationPopup />
 
     </div>
   );

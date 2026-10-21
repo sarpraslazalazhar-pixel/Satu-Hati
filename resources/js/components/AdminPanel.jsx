@@ -99,13 +99,15 @@ export default function AdminPanel() {
           <div className="hidden sm:block h-10 sm:h-12 w-[1.5px] bg-[#D5BEA1] mx-4 sm:mx-5 shrink-0" />
           <div className="flex flex-col justify-center">
             <h1 className="font-sans font-black text-2xl sm:text-3xl text-[#1C140E] tracking-tight leading-none">
-              Verifikasi Data Donatur
+              Dashboard Penghimpunan
             </h1>
           </div>
         </div>
 
         {/* Second Row: Action Buttons directly below Title */}
         <div className="mt-5 sm:mt-6 flex flex-wrap items-center gap-2">
+          
+
           <button
             onClick={() => setShowManualModal(true)}
             className="bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-xs cursor-pointer transition-all flex items-center gap-1.5"
@@ -131,7 +133,7 @@ export default function AdminPanel() {
             className="bg-white hover:bg-red-50 text-red-700 border border-red-200 font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-xs cursor-pointer transition-all flex items-center gap-1.5"
             title="Kelola & batalkan seluruh transaksi dari file impor jika salah upload/tarik"
           >
-            <span>📂 Rollback File Impor</span>
+            <span>📂 Kelola File Impor</span>
           </button>
 
           <button
@@ -172,7 +174,6 @@ export default function AdminPanel() {
         <div className="bg-[#FDFBF7] border border-[#ECE2D2] rounded-2xl p-4 sm:p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-1.5 mb-1">
-              <Wallet className="w-3.5 h-3.5 text-[#8C7A6B]" />
               <span className="text-[11px] font-bold text-[#8C7A6B] uppercase tracking-wider block">
                 TOTAL DANA TERVERIFIKASI
               </span>
@@ -189,9 +190,8 @@ export default function AdminPanel() {
         <div className="bg-[#FDFBF7] border border-[#ECE2D2] rounded-2xl p-4 sm:p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-1.5 mb-1">
-              <FileText className="w-3.5 h-3.5 text-[#8C7A6B]" />
               <span className="text-[11px] font-bold text-[#8C7A6B] uppercase tracking-wider block">
-                TOTAL QRIS (PDF)
+                TOTAL QRIS
               </span>
             </div>
             <span className="font-sans font-black text-2xl sm:text-3xl text-[#C66723] block leading-tight">
@@ -206,7 +206,6 @@ export default function AdminPanel() {
         <div className="bg-[#FDFBF7] border border-[#ECE2D2] rounded-2xl p-4 sm:p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-1.5 mb-1">
-              <DollarSign className="w-3.5 h-3.5 text-[#8C7A6B]" />
               <span className="text-[11px] font-bold text-[#8C7A6B] uppercase tracking-wider block">
                 TOTAL CASH / TUNAI
               </span>
@@ -223,7 +222,6 @@ export default function AdminPanel() {
         <div className="bg-[#FDFBF7] border border-[#ECE2D2] rounded-2xl p-4 sm:p-5 shadow-[0_2px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-1.5 mb-1">
-              <Heart className="w-3.5 h-3.5 text-[#8C7A6B]" />
               <span className="text-[11px] font-bold text-[#8C7A6B] uppercase tracking-wider block">
                 KOMITMEN / BOOK
               </span>
@@ -336,12 +334,12 @@ export default function AdminPanel() {
                     )}
 
                     {/* Badge VERIFIED / status */}
-                    {item.status === 'verified' && (
+                    {item.status === 'verified' && !item.isCommitment && (
                       <span className="bg-[#E8F8F0] text-[#1E8E5A] border border-[#A6E5C5] font-bold text-[10px] px-2.5 py-0.5 rounded-full">
                         VERIFIED
                       </span>
                     )}
-                    {item.status === 'rejected' && (
+                    {item.status === 'rejected' && !item.isCommitment && (
                       <span className="bg-red-50 text-red-600 border border-red-200 font-bold text-[10px] px-2.5 py-0.5 rounded-full">
                         DITOLAK
                       </span>
@@ -354,15 +352,15 @@ export default function AdminPanel() {
                     {item.isCommitment && (
                       isCommittedPaid(item) ? (
                         <span className="bg-[#E8F8F0] text-[#1E8E5A] border border-[#A6E5C5] font-bold text-[10px] px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                          💰 SUDAH DONASI
+                          💰 SUDAH DONASI (LUNAS)
                         </span>
                       ) : item.status === 'rejected' ? (
                         <span className="bg-stone-100 text-stone-500 border border-stone-200 font-bold text-[10px] px-2.5 py-0.5 rounded-full">
                           ⛔ DIBATALKAN
                         </span>
                       ) : (
-                        <span className="bg-amber-50 text-amber-700 border border-amber-200 font-bold text-[10px] px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                          ⏳ KOMITMEN (BELUM)
+                        <span className="bg-amber-50 text-amber-700 border border-amber-200 font-bold text-[10px] px-2.5 py-0.5 rounded-full flex items-center gap-1" title="Komitmen langsung tampil di kiosk. Klik tombol Bayar jika sudah dihubungi & bayar.">
+                          ⏳ BELUM DIHUBUNGI / BAYAR
                         </span>
                       )
                     )}
@@ -423,7 +421,7 @@ export default function AdminPanel() {
                   </span>
 
                   <div className="flex items-center gap-1.5 mt-1 flex-wrap justify-end">
-                    {item.status === 'pending' && (
+                    {item.status === 'pending' && !item.isCommitment && (
                       <>
                         <button
                           onClick={() => approveDonation(item.id)}
@@ -443,13 +441,22 @@ export default function AdminPanel() {
                     )}
 
                     {item.isCommitment && !isCommittedPaid(item) && item.status !== 'rejected' && (
-                      <button
-                        onClick={() => approveDonation(item.id)}
-                        className="flex items-center gap-1 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-2.5 py-1.5 rounded-xl shadow-2xs cursor-pointer transition-colors"
-                        title="Tandai komitmen ini sudah dibayar/donasi — akan masuk total progres & tampil di kiosk"
-                      >
-                        <Check className="w-3.5 h-3.5" /> Bayar
-                      </button>
+                      <>
+                        <button
+                          onClick={() => approveDonation(item.id)}
+                          className="flex items-center gap-1 bg-[#C66723] hover:bg-[#b0581a] text-white font-bold text-xs px-2.5 py-1.5 rounded-xl shadow-2xs cursor-pointer transition-colors"
+                          title="Validasi: Tandai komitmen ini sudah dihubungi & sudah bayar/donasi"
+                        >
+                          <Check className="w-3.5 h-3.5" /> Bayar
+                        </button>
+                        <button
+                          onClick={() => rejectDonation(item.id)}
+                          className="flex items-center gap-1 bg-white hover:bg-red-50 text-red-600 font-bold text-xs px-2 py-1.5 rounded-xl border border-red-200 cursor-pointer transition-colors"
+                          title="Batalkan komitmen donasi ini"
+                        >
+                          <X className="w-3.5 h-3.5" /> Batal
+                        </button>
+                      </>
                     )}
 
                     <button

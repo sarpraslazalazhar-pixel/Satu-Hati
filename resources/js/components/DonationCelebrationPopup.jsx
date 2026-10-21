@@ -93,7 +93,9 @@ export default function DonationCelebrationPopup() {
               </div>
               <div className="flex items-center justify-center gap-2 mt-2">
                 <span className="inline-block bg-orange-50 text-[#C66723] text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-md border border-orange-200">
-                  {latestApprovedDonation.paymentMethod === 'qris'
+                  {latestApprovedDonation.isCommitment
+                    ? 'KOMITMEN DONASI'
+                    : latestApprovedDonation.paymentMethod === 'qris'
                     ? 'QRIS DANAMON'
                     : latestApprovedDonation.paymentMethod === 'cash'
                     ? 'TUNAI / CASH'

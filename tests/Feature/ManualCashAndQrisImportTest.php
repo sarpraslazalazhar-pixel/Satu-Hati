@@ -94,6 +94,14 @@ class ManualCashAndQrisImportTest extends TestCase
             'status' => 'pending',
             'is_commitment' => true,
         ]);
+
+        // Komitmen langsung tampil di endpoint donasi publik
+        $public = $this->getJson('/api/donations');
+        $public->assertOk();
+        $this->assertSame(1000000, $public->json('campaign.currentAmount'));
+        $this->assertCount(1, $public->json('donations'));
+        $this->assertSame('Ibu Siti Komitmen', $public->json('donations.0.donorName'));
+        $this->assertTrue($public->json('donations.0.isCommitment'));
     }
 
     public function test_import_pdf_batch_creates_verified_donations_and_skips_duplicates(): void

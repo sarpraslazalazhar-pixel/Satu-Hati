@@ -31,11 +31,12 @@ class DonationStatusUpdated implements ShouldBroadcastNow
         $this->action = $action;
         $this->donation = $donation->toPublicArray();
 
-        $this->currentAmount = (int) Donation::where('status', 'verified')->sum('amount');
+        $counted = Donation::countedForPublic();
+        $this->currentAmount = (int) $counted->sum('amount');
         $targetAmount = 500000000; // Rp 500.000.000
         $raw = ($this->currentAmount / $targetAmount) * 100;
         $this->progressPercentage = $raw > 0 && $raw < 1 ? round($raw, 1) : (float) min(100, round($raw, 1));
-        $this->verifiedCount = Donation::where('status', 'verified')->count();
+        $this->verifiedCount = $counted->count();
     }
 
     /**

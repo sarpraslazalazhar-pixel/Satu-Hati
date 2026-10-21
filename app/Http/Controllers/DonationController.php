@@ -21,7 +21,7 @@ class DonationController extends Controller
      */
     public function index()
     {
-        $counted = fn () => Donation::where('status', 'verified');
+        $counted = fn () => Donation::countedForPublic();
 
         $currentAmount = (int) $counted()->sum('amount');
         $raw = ($currentAmount / $this->targetAmount) * 100;
@@ -383,7 +383,7 @@ class DonationController extends Controller
             return $d->toAdminArray();
         });
 
-        $counted = fn () => Donation::where('status', 'verified');
+        $counted = fn () => Donation::countedForPublic();
 
         $currentAmount = (int) $counted()->sum('amount');
         $qrisAmount = (int) $counted()->where('payment_method', 'qris')->sum('amount');
@@ -392,8 +392,8 @@ class DonationController extends Controller
         $cashCount = $counted()->where('payment_method', 'cash')->where('is_commitment', false)->count();
         $committedAmount = (int) Donation::where('is_commitment', true)->sum('amount');
         $committedCount = Donation::where('is_commitment', true)->count();
-        $committedPaidAmount = (int) $counted()->where('is_commitment', true)->sum('amount');
-        $committedPaidCount = $counted()->where('is_commitment', true)->count();
+        $committedPaidAmount = (int) Donation::where('is_commitment', true)->where('status', 'verified')->sum('amount');
+        $committedPaidCount = Donation::where('is_commitment', true)->where('status', 'verified')->count();
         $raw = ($currentAmount / $this->targetAmount) * 100;
         $progressPercentage = $raw > 0 && $raw < 1 ? round($raw, 1) : (float) min(100, round($raw, 1));
 
@@ -514,7 +514,9 @@ class DonationController extends Controller
         ]);
 
         try {
-            $action = $donation->status === 'verified' ? 'approved' : 'rejected';
+            $action = ($donation->status === 'verified' || ($donation->is_commitment && $donation->status !== 'rejected'))
+                ? 'approved'
+                : 'rejected';
             broadcast(new DonationStatusUpdated($donation, $action));
         } catch (\Throwable $e) {
             report($e);
@@ -536,7 +538,7 @@ class DonationController extends Controller
         $clone = clone $donation;
         $donation->delete();
 
-        if ($clone->status === 'verified') {
+        if ($clone->status === 'verified' || ($clone->is_commitment && $clone->status !== 'rejected')) {
             try {
                 broadcast(new DonationStatusUpdated($clone, 'rejected'));
             } catch (\Throwable $e) {

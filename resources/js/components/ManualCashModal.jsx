@@ -57,16 +57,14 @@ export default function ManualCashModal({ isOpen, onClose }) {
     setIsSubmitting(false);
 
     if (res.success) {
-      setSuccessMsg(res.message || 'Donasi berhasil dicatat!');
-      setTimeout(() => {
-        setDonorName('');
-        setDonorPhone('');
-        setAmount('');
-        setIsCommitment(false);
-        setPrayerMessage('');
-        setSuccessMsg('');
-        onClose();
-      }, 1200);
+      setDonorName('');
+      setDonorPhone('');
+      setAmount('');
+      setIsCommitment(false);
+      setPrayerMessage('');
+      setErrorMsg('');
+      setSuccessMsg('');
+      onClose();
     } else {
       setErrorMsg(res.message || 'Gagal menyimpan donasi.');
     }

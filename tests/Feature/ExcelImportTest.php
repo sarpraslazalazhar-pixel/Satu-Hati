@@ -197,16 +197,16 @@ class ExcelImportTest extends TestCase
     {
         Donation::create(['donor_name' => 'A', 'donor_phone' => 'x', 'amount' => 100000, 'status' => 'verified', 'payment_method' => 'qris']);
         Donation::create(['donor_name' => 'B', 'donor_phone' => 'x', 'amount' => 200000, 'status' => 'verified', 'payment_method' => 'cash']);
-        // Komitmen pending: TIDAK boleh masuk total terkumpul.
+        // Komitmen aktif: langsung tampil dan masuk total capaian.
         Donation::create(['donor_name' => 'C', 'donor_phone' => 'x', 'amount' => 50000, 'status' => 'pending', 'payment_method' => 'cash', 'is_commitment' => true]);
-        // Ditolak: juga tidak.
+        // Ditolak: tidak masuk total capaian.
         Donation::create(['donor_name' => 'D', 'donor_phone' => 'x', 'amount' => 90000, 'status' => 'rejected', 'payment_method' => 'qris']);
 
         $public = $this->getJson('/api/donations')->json('campaign');
         $admin = $this->actingAs($this->admin)->getJson('/api/admin/donations')->json();
-        $dbSum = (int) Donation::where('status', 'verified')->sum('amount');
+        $dbSum = (int) Donation::countedForPublic()->sum('amount');
 
-        $this->assertSame(300000, $public['currentAmount']);
+        $this->assertSame(350000, $public['currentAmount']);
         $this->assertSame($dbSum, $public['currentAmount']);
         $this->assertSame($dbSum, $admin['currentAmount']);
     }

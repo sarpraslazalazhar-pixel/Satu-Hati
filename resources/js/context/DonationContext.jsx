@@ -162,7 +162,6 @@ export function DonationProvider({ children }) {
         verifiedCount: e.verifiedCount
       }));
       if ((e.action === 'approved' || e.action === 'updated') && e.donation) {
-        setLatestApprovedDonation(e.donation);
         setVerifiedDonations((prev) => {
           // Hindari duplikasi jika id sudah ada
           if (prev.some((item) => item.id === e.donation.id)) {
@@ -377,7 +376,7 @@ export function DonationProvider({ children }) {
       if (res.ok && data.success) {
         fetchPublicData();
         fetchAdminData();
-        return { success: true, message: data.message };
+        return { success: true, message: data.message, donation: data.donation };
       }
       return {
         success: false,
@@ -388,6 +387,21 @@ export function DonationProvider({ children }) {
       return { success: false, message: 'Koneksi error ke server' };
     }
   };
+  // Navigasi instan ke halaman publik donasi / kiosk
+  const navigateToKiosk = useCallback(() => {
+    setActiveTab('public');
+    if (typeof window !== 'undefined') {
+      try {
+        if (window.location.pathname !== '/') {
+          window.history.pushState(null, '', '/');
+          window.dispatchEvent(new PopStateEvent('popstate'));
+        }
+      } catch {
+        window.location.href = '/';
+      }
+    }
+  }, []);
+
 
   // Parse PDF laporan QRIS Danamon (Mendukung 1 file atau banyak file sekaligus)
   const parseQrisPdf = async (files) => {
@@ -529,7 +543,8 @@ export function DonationProvider({ children }) {
         latestApprovedDonation,
         setLatestApprovedDonation,
         refetchPublic: fetchPublicData,
-        refetchAdmin: fetchAdminData
+        refetchAdmin: fetchAdminData,
+        navigateToKiosk,
       }}
     >
       {children}

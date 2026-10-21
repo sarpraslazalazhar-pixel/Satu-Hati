@@ -47,6 +47,21 @@ class Donation extends Model
     }
 
     /**
+     * Scope query untuk donasi yang aktif dihitung dan tampil di publik (kiosk / page donasi).
+     * Termasuk donasi verified dan donasi komitmen aktif (selama belum ditolak).
+     */
+    public function scopeCountedForPublic($query)
+    {
+        return $query->where(function ($q) {
+            $q->where('status', 'verified')
+                ->orWhere(function ($sub) {
+                    $sub->where('is_commitment', true)
+                        ->where('status', '!=', 'rejected');
+                });
+        });
+    }
+
+    /**
      * Scope query untuk donasi yang pending (antrean)
      */
     public function scopePending($query)
@@ -76,6 +91,7 @@ class Donation extends Model
             'isCommitment' => (bool) $this->is_commitment,
             'prayerMessage' => $this->prayer_message,
             'paymentUrl' => $this->payment_url,
+            'status' => $this->status,
             'donatedAt' => $this->donated_at ? $this->donated_at->format('Y-m-d H:i') : null,
             'createdAt' => $this->created_at ? $this->created_at->diffForHumans() : 'Baru saja',
         ];
