@@ -4,6 +4,7 @@ import { useDonation } from '../context/DonationContext';
 import useCountUp from '../hooks/useCountUp';
 import SandParticleOverlay from './SandParticleOverlay';
 import DonorFeedList from './DonorFeedList';
+import NewsFeedList from './NewsFeedList';
 import DonorToastNotification from './DonorToastNotification';
 
 const DEFAULT_NEWS = [
@@ -39,7 +40,7 @@ export default function SinglePageKiosk() {
       .then((r) => r.json())
       .then((data) => {
         const slides = data.slides || (Array.isArray(data) ? data : data.data || []);
-        if (slides.length > 0) setNewsList(slides.slice(0, 3));
+        if (slides.length > 0) setNewsList(slides);
       })
       .catch(() => {});
   }, []);
@@ -226,38 +227,8 @@ export default function SinglePageKiosk() {
           </div>
 
           {/* KOLOM 3: BERITA TERBARU (4/12) */}
-          <div className="md:col-span-4 flex flex-col h-auto md:h-full min-h-0">
-            <div className="bg-white/95 rounded-2xl shadow-sm border border-[#E5DAC8] p-3 sm:p-4 flex flex-col justify-between h-full">
-              <div>
-                <h3 className="font-poster font-black text-xs sm:text-sm text-[#1C140E] mb-2.5 text-center">
-                  Berita Terbaru
-                </h3>
-                <div className="flex flex-col gap-2">
-                  {newsList.map((item, idx) => (
-                    <div key={item.id || idx} className="flex items-center gap-2.5">
-                      <img
-                        src={item.image_path || '/images/hero-figure.webp'}
-                        alt=""
-                        className="w-11 h-11 sm:w-12 sm:h-12 rounded-lg object-cover shrink-0 border border-stone-200"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <span className="text-[8.5px] font-bold text-red-600 block uppercase tracking-wide leading-none">
-                          {item.badge_text || 'AKSI KEMANUSIAAN'}
-                        </span>
-                        <h4 className="text-[11.5px] sm:text-xs font-bold text-[#1C140E] leading-snug line-clamp-2 mt-0.5">
-                          {item.title}
-                        </h4>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="text-center pt-2 border-t border-stone-100 mt-2">
-                <span className="text-xs text-stone-500 font-medium hover:text-[#C66723] cursor-pointer">
-                  Baca Berita Lain
-                </span>
-              </div>
-            </div>
+          <div className="md:col-span-4 flex flex-col h-[320px] md:h-full min-h-0">
+            <NewsFeedList news={newsList} />
           </div>
 
         </section>

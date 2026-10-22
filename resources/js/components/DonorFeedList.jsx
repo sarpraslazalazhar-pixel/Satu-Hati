@@ -1,43 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Heart } from 'lucide-react';
+import useLoopingTicker from '../hooks/useLoopingTicker';
 
 const DISPLAY_COUNT = 3;
 
 export default function DonorFeedList({ donations = [] }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isResetting, setIsResetting] = useState(false);
-  const total = donations.length;
-
-  useEffect(() => {
-    if (total <= DISPLAY_COUNT) {
-      setActiveIndex(0);
-      return;
-    }
-
-    let resetTimer = null;
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => {
-        const next = prev + 1;
-        if (next === total) {
-          resetTimer = setTimeout(() => {
-            setIsResetting(true);
-            setActiveIndex(0);
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                setIsResetting(false);
-              });
-            });
-          }, 820);
-        }
-        return next;
-      });
-    }, 3500);
-
-    return () => {
-      clearInterval(interval);
-      clearTimeout(resetTimer);
-    };
-  }, [total]);
+  const { activeIndex, isResetting, extendedList, total } = useLoopingTicker(donations, DISPLAY_COUNT);
+  const L = extendedList.length;
 
   const formatRupiah = (val) => {
     return new Intl.NumberFormat('id-ID', {
@@ -46,12 +15,6 @@ export default function DonorFeedList({ donations = [] }) {
       maximumFractionDigits: 0
     }).format(val || 0);
   };
-
-  const extendedList = total > DISPLAY_COUNT
-    ? [...donations, ...donations.slice(0, DISPLAY_COUNT)]
-    : donations;
-
-  const L = extendedList.length;
 
   return (
     <div className="bg-white/95 rounded-2xl shadow-sm border border-[#E5DAC8] p-3 sm:p-4 flex flex-col h-full min-h-0 relative overflow-hidden">
