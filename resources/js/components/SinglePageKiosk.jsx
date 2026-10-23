@@ -145,7 +145,7 @@ export default function SinglePageKiosk() {
                     <span>Live Monitor</span>
                   </span>
                   <h2 className="text-xs sm:text-sm lg:text-base font-bold text-[#1C140E]">
-                    Total Donasi Palestina
+                    Total Donasi Kemanusiaan Indonesia dan Palestina
                   </h2>
                 </div>
               </div>
